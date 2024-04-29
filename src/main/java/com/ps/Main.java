@@ -24,7 +24,10 @@ public class Main {
         readFromFile();
         transactionList.displayTransactionList();
 
-        addDepositOption();
+        for (int i = 0; i < 2; i++) {
+            addDepositOption();
+        }
+
 
         // Do-while loop
             // *Home Menu*
@@ -74,7 +77,7 @@ public class Main {
 
     }
 
-    // InputData method to read from File
+    // readFromFile method to read from File
     public static void readFromFile() {
         try {
             BufferedReader bufReader = new BufferedReader(new FileReader("transactions.txt"));
@@ -98,12 +101,14 @@ public class Main {
         }
     }
 
-    // OutputData method to write to File
+    // writeToFile method to write to File
     public static void writeToFile(Transaction transaction) {
         // Format Date and Time
 
         try {
-            BufferedWriter bufWriter = new BufferedWriter(new FileWriter("transactions.txt"));
+            // Have to append data to the end of the .txt file so that it doesn't overwrite the previous output(s) to the file.
+            // The append argument is set to "true" for the FileWriter.
+            BufferedWriter bufWriter = new BufferedWriter(new FileWriter("transactions.txt", true));
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
             String formattedDate = transaction.getDate().format(dateFormatter);
