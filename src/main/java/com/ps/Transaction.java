@@ -2,7 +2,6 @@ package com.ps;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 
 public class Transaction {
     // date|time|description|vendor|amount
@@ -60,12 +59,11 @@ public class Transaction {
     // ToString() method
     @Override
     public String toString() {
-        return "Transaction{" +
-                "date=" + date +
-                ", time=" + time +
-                ", description='" + description + '\'' +
-                ", vendor='" + vendor + '\'' +
-                ", amount=" + amount +
-                '}';
+        return "Date: " + date +
+                "\n\tTime: " + time +
+                "\n\tDescription: " + description +
+                "\n\tVendor: " + vendor +
+                "\n\tAmount: $" + amount +
+                "\n";
     }
 }

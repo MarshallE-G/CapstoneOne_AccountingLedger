@@ -22,6 +22,8 @@ public class TransactionStorage {
 
     // Displays a list of all transactions within the transactionList ArrayList
     public void displayTransactionList() {
-        System.out.println(transactionList);
+        for (Transaction transaction : transactionList) {
+            System.out.println(transaction);
+        }
     }
 }
