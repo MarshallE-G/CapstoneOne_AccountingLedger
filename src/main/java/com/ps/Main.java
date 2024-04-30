@@ -37,12 +37,15 @@ public class Main {
                     // Option P: Make Payment (Debit)
                     // Option L: Ledger Menu
                     // Option X: Exit
-        displayHomeOptions();
+
+        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
+
+        homeMenu();
 
         System.out.println();
 
-        addDepositOption();
-        makePaymentOption();
+        addDeposit();
+        makePayment();
 
 //        System.out.println("\nEnter selection here:");
 //        menuSelection = scanner.next();
@@ -164,8 +167,11 @@ public class Main {
     }
 
     // Static methods for Menus
-    public static void displayHomeOptions() {
+    public static void homeMenu() {
         Scanner scanner = new Scanner(System.in);
+        System.out.println("* * * * * * *");
+        System.out.println("* Home Menu *");
+        System.out.println("* * * * * * *\n");
         System.out.println("Please select from the following menu options:");
 
         // Option D: Add Deposit
@@ -178,7 +184,7 @@ public class Main {
         System.out.println("\tEnter X to EXIT");
     }
 
-    public static void addDepositOption() {
+    public static void addDeposit() {
         String description;
         String vendor;
         float amount;
@@ -204,7 +210,7 @@ public class Main {
         System.out.println("Auto-redirecting to Home menu...\n\n");
     }
 
-    public static void makePaymentOption() {
+    public static void makePayment() {
         // *Make Payment (Debit)*
         String description;
         String vendor;
@@ -229,6 +235,42 @@ public class Main {
         writeToFile(transaction);
 
         System.out.println("Auto-redirecting to Home menu...\n\n");
+    }
+
+    public static void ledgerMenu() {
+        Scanner scanner = new Scanner(System.in);
+        // Do-while loop
+            // **Ledger Menu**
+        System.out.println("* * * * * * * *");
+        System.out.println("* Ledger Menu *");
+        System.out.println("* * * * * * * * \n");
+                    // Switch statement
+                        // Option A: All
+                        // Option D: Deposits
+                        // Option P: Payments
+                    // Do-while loop
+                        // Option R: ***Report Menu*** (display transactions based on filter options)
+                            // Switch statement
+                                // Option 1) Month To Date - first of the month that you're in (e.g. April 1st to NOW)
+                                // Option 2) Previous Month - Everything in the previous month (e.g. March)
+                                // Option 3) Year To Date - January 1st to NOW
+                                // Option 4) Previous Year - January 1st of Previous year to NOW
+                                // Option 5) Search by Vendor - Ask for vendor's name. (DON'T use spaces n stuff, keep it simple)
+                                // Option 0) Back
+                    // End of Report's Do-while loop
+                        // Option H: Home
+        // End of Ledger Menu Do-while loop
+    }
+
+    public static void reportsMenu() {
+        // Option R: ***Report Menu*** (display transactions based on filter options)
+            // Switch statement
+                // Option 1) Month To Date - first of the month that you're in (e.g. April 1st to NOW)
+                // Option 2) Previous Month - Everything in the previous month (e.g. March)
+                // Option 3) Year To Date - January 1st to NOW
+                // Option 4) Previous Year - January 1st of Previous year to NOW
+                // Option 5) Search by Vendor - Ask for vendor's name. (DON'T use spaces n stuff, keep it simple)
+                // Option 0) Back
     }
 
 }
