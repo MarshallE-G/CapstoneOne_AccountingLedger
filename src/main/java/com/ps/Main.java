@@ -320,11 +320,15 @@ public class Main {
                 // Switch statement
         switch (reportsMenuSelection) {
             case "1": // Month to Date
+                System.out.println("\n                            Month To Date Report                            ");
+                System.out.println("                             -- Transactions --                             \n");
+                System.out.println("(Newest - Oldest transaction)");
+                System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
 
                 transactionList.monthToDate();
 
                 do {
-                    System.out.println("Enter B to leave page:");
+                    System.out.println("\nEnter B to leave page:");
                     backButton = scanner.next();
                     if (backButton.equalsIgnoreCase("B")) {
                         break;
@@ -334,11 +338,15 @@ public class Main {
                 } while (!backButton.equals("B"));
                 break;
             case "2": // Previous Month
+                System.out.println("\n                           Previous Month Report                          ");
+                System.out.println("                             -- Transactions --                             \n");
+                System.out.println("(Newest - Oldest transaction)");
+                System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
 
-
+                transactionList.previousMonth();
 
                 do {
-                    System.out.println("Enter B to leave page:");
+                    System.out.println("\nEnter B to leave page:");
                     backButton = scanner.next();
                     if (backButton.equalsIgnoreCase("B")) {
                         break;
@@ -348,11 +356,15 @@ public class Main {
                 } while (!backButton.equals("B"));
                 break;
             case "3": // Year to Date
+                System.out.println("\n                            Year to Date Report                          ");
+                System.out.println("                             -- Transactions --                             \n");
+                System.out.println("(Newest - Oldest transaction)");
+                System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
 
-
+                transactionList.yearToDate();
 
                 do {
-                    System.out.println("Enter B to leave page:");
+                    System.out.println("\nEnter B to leave page:");
                     backButton = scanner.next();
                     if (backButton.equalsIgnoreCase("B")) {
                         break;
@@ -362,10 +374,15 @@ public class Main {
                 } while (!backButton.equals("B"));
                 break;
             case "4": // Previous Year
+                System.out.println("\n                            Previous Date Report                          ");
+                System.out.println("                             -- Transactions --                             \n");
+                System.out.println("(Newest - Oldest transaction)");
+                System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
+
 
 
                 do {
-                    System.out.println("Enter B to leave page:");
+                    System.out.println("\nEnter B to leave page:");
                     backButton = scanner.next();
                     if (backButton.equalsIgnoreCase("B")) {
                         break;
@@ -375,10 +392,21 @@ public class Main {
                 } while (!backButton.equals("B"));
                 break;
             case "5": // Search by Vendor
+                String vendor;
+
+                System.out.println("Enter the name of a vendor to see transactions registered to them.");
+                System.out.println("Enter here:");
+                vendor = scanner.next();
+
+                System.out.println("\n                            Search by Vendor Report                          ");
+                System.out.println("                             -- Transactions --                             \n");
+                System.out.println("(Newest - Oldest transaction)");
+                System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
+
 
 
                 do {
-                    System.out.println("Enter B to leave page:");
+                    System.out.println("\nEnter B to leave page:");
                     backButton = scanner.next();
                     if (backButton.equalsIgnoreCase("B")) {
                         break;
