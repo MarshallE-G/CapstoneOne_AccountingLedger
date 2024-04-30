@@ -2,6 +2,7 @@ package com.ps;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -22,9 +23,9 @@ public class Main {
 
         // Read from File first
         readFromFile();
-        transactionList.displayTransactionList();
+        transactionList.displayAllTransactions();
+        transactionList.monthToDate();
 
-//        addDepositOption();
         String menuSelection;
 
         // Do-while loop
@@ -36,48 +37,37 @@ public class Main {
                     // Option X: Exit
         displayHomeOptions();
 
-        System.out.println("\nEnter selection here:");
-        menuSelection = scanner.next();
+        System.out.println();
 
-        switch (menuSelection.toUpperCase()) { // Making every input uppercase acts as a make-shift ignore-case.
-            case "D":
-                System.out.println("Option D selected");
-                System.out.println("Printed successfully....");
-                break;
-            case "P":
-                System.out.println("Option P selected");
-                System.out.println("Printed successfully....");
-                break;
-            case "L":
-                System.out.println("Option L selected");
-                System.out.println("Printed successfully....");
-                break;
-            case "X":
-                System.out.println("Option X selected");
-                System.out.println("Printed successfully....");
-                break;
-            default:
-                System.out.println(menuSelection);
-                System.out.println("ERROR: Must type D, P, L, or X!");
-                System.out.println("Printed successfully....");
-                break;
-        }
+        addDepositOption();
+        makePaymentOption();
 
-                // *Add Deposit*
-                    // Ask user for deposit info
-                        // Description
-                        // Vendor
-                        // Deposit amount
-                    // Save info to transactions
-                    // "...Will auto-redirect to Home menu once transaction is complete..." <-- Might not do this.
-
-                // *Make Payment (Debit)*
-                    // Ask user for payment/debit info
-                        // Description
-                        // Vendor
-                        // Payment/debit amount
-                    // Save info to transactions
-                    // "...Will auto-redirect to Home menu once transaction is complete..." <-- Might not do this.
+//        System.out.println("\nEnter selection here:");
+//        menuSelection = scanner.next();
+//
+//        switch (menuSelection.toUpperCase()) { // Making every input uppercase acts as a make-shift ignore-case.
+//            case "D":
+//                System.out.println("Option D selected");
+//                System.out.println("Printed successfully....");
+//                break;
+//            case "P":
+//                System.out.println("Option P selected");
+//                System.out.println("Printed successfully....");
+//                break;
+//            case "L":
+//                System.out.println("Option L selected");
+//                System.out.println("Printed successfully....");
+//                break;
+//            case "X":
+//                System.out.println("Option X selected");
+//                System.out.println("Printed successfully....");
+//                break;
+//            default:
+//                System.out.println(menuSelection);
+//                System.out.println("ERROR: Must type D, P, L, or X!");
+//                System.out.println("Printed successfully....");
+//                break;
+//        }
 
             // Do-while loop
                 // **Ledger Menu**
@@ -97,9 +87,6 @@ public class Main {
                     // End of Report's Do-while loop
                         // Option H: Home
             // End of Ledger Menu Do-while loop
-
-
-
 
     }
 
@@ -149,12 +136,22 @@ public class Main {
                     transaction.getAmount()
                     ));
 
-            System.out.printf("Date: %s\n\tTime: %s\n\tDescription: %s\n\tVendor: %s\n\tAmount: $%.2f\n",
-                    formattedDate,
-                    formattedTime,
-                    transaction.getDescription(),
-                    transaction.getVendor(),
-                    transaction.getAmount());
+            System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
+            if (transaction.getAmount() == Math.abs(transaction.getAmount())) { // If credit: prints NO negative sign
+                System.out.printf("%s | %s | %s | %s | $%.2f\n",
+                        formattedDate,
+                        formattedTime,
+                        transaction.getDescription(),
+                        transaction.getVendor(),
+                        transaction.getAmount());
+            } else if (transaction.getAmount() != Math.abs(transaction.getAmount())) { // If debit: prints negative sign
+                System.out.printf("%s | %s | %s | %s | -$%.2f\n",
+                        formattedDate,
+                        formattedTime,
+                        transaction.getDescription(),
+                        transaction.getVendor(),
+                        Math.abs(transaction.getAmount()));
+            }
 
             System.out.println("Printed Successfully......");
 
@@ -191,7 +188,7 @@ public class Main {
         System.out.println("Enter a description of the deposit (e.g. \"Invoice 1001 paid\"): ");
         description = scanner.nextLine();
                 // Vendor
-        System.out.println("Enter name of vendor you're depositing to (e.g. Joe): ");
+        System.out.println("Enter name of vendor (e.g. Joe): ");
         vendor = scanner.nextLine();
                 // Deposit amount
         System.out.println("Enter deposit amount: ");
@@ -201,11 +198,35 @@ public class Main {
         Transaction transaction = new Transaction(LocalDate.now(), LocalTime.now(), description, vendor, amount);
             // Output transaction to transactions file
         writeToFile(transaction);
-            // "...Will auto-redirect to Home menu once transaction is complete..." <-- Might not do this.
+
+        System.out.println("Auto-redirecting to Home menu...\n\n");
     }
 
     public static void makePaymentOption() {
+        // *Make Payment (Debit)*
+        String description;
+        String vendor;
+        float amount;
 
+        Scanner scanner = new Scanner(System.in);
+
+            // Ask user for payment/debit info
+                // Description
+        System.out.println("Enter a description of the payment/debit (e.g. \"ergonomic keyboard\"): ");
+        description = scanner.nextLine();
+                // Vendor
+        System.out.println("Enter name of vendor (e.g. Amazon): ");
+        vendor = scanner.nextLine();
+                // Payment/debit amount
+        System.out.println("Enter payment/debit amount: ");
+        amount = -1 * scanner.nextFloat(); // Multiply inputted amount by -1 to get negative value (debit)
+        System.out.println();
+            // Save info to transactions
+        Transaction transaction = new Transaction(LocalDate.now(), LocalTime.now(), description, vendor, amount);
+            // Output transaction to transactions file
+        writeToFile(transaction);
+
+        System.out.println("Auto-redirecting to Home menu...\n\n");
     }
 
 }

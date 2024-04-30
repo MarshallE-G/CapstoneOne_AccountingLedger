@@ -59,11 +59,11 @@ public class Transaction {
     // ToString() method
     @Override
     public String toString() {
-        return "Date: " + date +
-                "\n\tTime: " + time +
-                "\n\tDescription: " + description +
-                "\n\tVendor: " + vendor +
-                "\n\tAmount: $" + amount +
-                "\n";
+        if (amount == Math.abs(amount)) {
+            return date + " | " + time + " | " + description + " | " + vendor + " | $" + amount;
+        } else if (amount != Math.abs(amount)) {
+            return date + " | " + time + " | " + description + " | " + vendor + " | -$" + Math.abs(amount);
+        }
+        return null;
     }
 }
