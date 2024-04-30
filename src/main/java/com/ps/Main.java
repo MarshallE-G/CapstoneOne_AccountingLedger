@@ -24,7 +24,9 @@ public class Main {
         // Read from File first
         readFromFile();
         transactionList.displayAllTransactions();
-        transactionList.monthToDate();
+        transactionList.displayDeposits();
+        transactionList.displayPayments();
+//        transactionList.monthToDate();
 
         String menuSelection;
 
