@@ -38,9 +38,11 @@ public class Main {
                     // Option L: Ledger Menu
                     // Option X: Exit
 
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
-
         homeMenu();
+
+        System.out.println();
+
+        ledgerMenu();
 
         System.out.println();
 
@@ -69,7 +71,7 @@ public class Main {
 //                break;
 //            default:
 //                System.out.println(menuSelection);
-//                System.out.println("ERROR: Must type D, P, L, or X!");
+//                System.out.println("ERROR: Must type either D, P, L, or X!");
 //                System.out.println("Printed successfully....");
 //                break;
 //        }
@@ -143,14 +145,14 @@ public class Main {
 
             System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
             if (transaction.getAmount() == Math.abs(transaction.getAmount())) { // If credit: prints NO negative sign
-                System.out.printf("%s | %s | %s | %s | $%.2f\n",
+                System.out.printf("Added transaction: %s | %s | %s | %s | $%.2f\n", // For when you add a transaction (credit/debit)
                         formattedDate,
                         formattedTime,
                         transaction.getDescription(),
                         transaction.getVendor(),
                         transaction.getAmount());
             } else if (transaction.getAmount() != Math.abs(transaction.getAmount())) { // If debit: prints negative sign
-                System.out.printf("%s | %s | %s | %s | -$%.2f\n",
+                System.out.printf("Added transaction: %s | %s | %s | %s | -$%.2f\n", // For when you add a transaction (credit/debit)
                         formattedDate,
                         formattedTime,
                         transaction.getDescription(),
@@ -239,38 +241,161 @@ public class Main {
 
     public static void ledgerMenu() {
         Scanner scanner = new Scanner(System.in);
+
+        String ledgerMenuSelection;
         // Do-while loop
             // **Ledger Menu**
         System.out.println("* * * * * * * *");
         System.out.println("* Ledger Menu *");
         System.out.println("* * * * * * * * \n");
+
+                // Option A: All
+        System.out.println("Enter A to view All Transaction Entries");
+                // Option D: Deposits
+        System.out.println("Enter D to view Deposit Entries");
+                // Option P: Payments
+        System.out.println("Enter P to view Payment/Debit Entries");
+                // Option R: ***Report Menu*** (display transactions based on filter options)
+        System.out.println("Enter R for Reports Menu");
+                // Option H: Home
+        System.out.println("Enter H to GO BACK to Home Menu");
+
+        System.out.println("\nEnter selection here: ");
+        ledgerMenuSelection = scanner.next();
+
                     // Switch statement
-                        // Option A: All
-                        // Option D: Deposits
-                        // Option P: Payments
-                    // Do-while loop
-                        // Option R: ***Report Menu*** (display transactions based on filter options)
-                            // Switch statement
-                                // Option 1) Month To Date - first of the month that you're in (e.g. April 1st to NOW)
-                                // Option 2) Previous Month - Everything in the previous month (e.g. March)
-                                // Option 3) Year To Date - January 1st to NOW
-                                // Option 4) Previous Year - January 1st of Previous year to NOW
-                                // Option 5) Search by Vendor - Ask for vendor's name. (DON'T use spaces n stuff, keep it simple)
-                                // Option 0) Back
-                    // End of Report's Do-while loop
-                        // Option H: Home
+        switch (ledgerMenuSelection.toUpperCase()) { // Making every input uppercase acts as a make-shift ignore-case.
+            case "A": // All Transactions
+                transactionList.displayAllTransactions();
+                break;
+            case "D": // Deposits
+                transactionList.displayDeposits();
+                break;
+            case "P": // Payments
+                transactionList.displayPayments();
+                break;
+            case "R": // Reports Menu
+
+                reportsMenu();
+
+                break;
+            case "H": // Go back to Home
+                System.out.println("\nReturning to Home Menu...\n");
+                break;
+            default:
+                System.out.println("ERROR: Must type either A, D, P, R, or H!");
+                break;
+        }
+
         // End of Ledger Menu Do-while loop
     }
 
     public static void reportsMenu() {
-        // Option R: ***Report Menu*** (display transactions based on filter options)
-            // Switch statement
+        Scanner scanner = new Scanner(System.in);
+
+        String reportsMenuSelection;
+        // Do-while loop
+            // ***Report Menu*** (display transactions based on filter options)
+        System.out.println("*  *  *  *  *  *");
+        System.out.println("* Reports Menu *");
+        System.out.println("*  *  *  *  *  *\n");
+
                 // Option 1) Month To Date - first of the month that you're in (e.g. April 1st to NOW)
+        System.out.println("Enter 1 to view transaction entries from Month to Date");
                 // Option 2) Previous Month - Everything in the previous month (e.g. March)
+        System.out.println("Enter 2 to view transaction entries from Previous Month");
                 // Option 3) Year To Date - January 1st to NOW
+        System.out.println("Enter 3 to view transaction entries from Year to Date");
                 // Option 4) Previous Year - January 1st of Previous year to NOW
+        System.out.println("Enter 4 to view transaction entries from Previous Year");
                 // Option 5) Search by Vendor - Ask for vendor's name. (DON'T use spaces n stuff, keep it simple)
+        System.out.println("Enter 5 to Search by Vendor");
                 // Option 0) Back
+        System.out.println("Enter 0 to GO BACK to Ledger Menu");
+
+        System.out.println("\nEnter selection here:");
+        reportsMenuSelection = scanner.next();
+
+        String backButton;
+                // Switch statement
+        switch (reportsMenuSelection) {
+            case "1": // Month to Date
+
+                transactionList.monthToDate();
+
+                do {
+                    System.out.println("Enter B to leave page:");
+                    backButton = scanner.next();
+                    if (backButton.equalsIgnoreCase("B")) {
+                        break;
+                    } else {
+                        System.out.println("\nERROR: Must type B and press 'Enter' to leave page.\n");
+                    }
+                } while (!backButton.equals("B"));
+                break;
+            case "2": // Previous Month
+
+
+
+                do {
+                    System.out.println("Enter B to leave page:");
+                    backButton = scanner.next();
+                    if (backButton.equalsIgnoreCase("B")) {
+                        break;
+                    } else {
+                        System.out.println("\nERROR: Must type B and press 'Enter' to leave page.\n");
+                    }
+                } while (!backButton.equals("B"));
+                break;
+            case "3": // Year to Date
+
+
+
+                do {
+                    System.out.println("Enter B to leave page:");
+                    backButton = scanner.next();
+                    if (backButton.equalsIgnoreCase("B")) {
+                        break;
+                    } else {
+                        System.out.println("\nERROR: Must type B and press 'Enter' to leave page.\n");
+                    }
+                } while (!backButton.equals("B"));
+                break;
+            case "4": // Previous Year
+
+
+                do {
+                    System.out.println("Enter B to leave page:");
+                    backButton = scanner.next();
+                    if (backButton.equalsIgnoreCase("B")) {
+                        break;
+                    } else {
+                        System.out.println("\nERROR: Must type B and press 'Enter' to leave page.\n");
+                    }
+                } while (!backButton.equals("B"));
+                break;
+            case "5": // Search by Vendor
+
+
+                do {
+                    System.out.println("Enter B to leave page:");
+                    backButton = scanner.next();
+                    if (backButton.equalsIgnoreCase("B")) {
+                        break;
+                    } else {
+                        System.out.println("\nERROR: Must type B and press 'Enter' to leave page.\n");
+                    }
+                } while (!backButton.equals("B"));
+                break;
+            case "0": // Go back to Ledger
+                System.out.println("\nReturning to Ledger Menu...\n");
+                break;
+            default:
+                System.out.println("ERROR: Must type either 1, 2, 3, 4, 5, or 0!");
+                break;
+        }
+
+        // End of Do-while loop
     }
 
 }

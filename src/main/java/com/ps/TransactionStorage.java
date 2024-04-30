@@ -77,7 +77,7 @@ public class TransactionStorage {
         }
     }
 
-    // Displays transactions from the 1st day of the current month to CURRENT DATE (e.g. April 1st to NOW)
+    // Displays transactions from the 1st day of the current MONTH to CURRENT DATE (e.g. April 1st to NOW)
     public void monthToDate() {
         boolean transactionInMonth = false;
 
@@ -99,6 +99,68 @@ public class TransactionStorage {
         if (!transactionInMonth) { // If there are NO transactions made this current month, THIS will happen.
             System.out.println("No transactions have been made this month.");
         }
+    }
+
+    // Displays all transactions from the previous month (e.g. March 1st - March 31st)
+    public void previousMonth() {
+        boolean transactionInMonth = false;
+        int monthInInteger;
+
+        System.out.println("\n                          Previous Month Report                          ");
+        System.out.println("                             -- Transactions --                             \n");
+        System.out.println("(Newest - Oldest transaction)");
+        System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
+
+        // Find previous month
+        LocalDate dateNow = LocalDate.now(); // Current date
+        int monthNowInteger = dateNow.getMonthValue(); // Current month in numbers (= 4)
+        int previousMonthInteger = 0;
+        if (monthNowInteger > 1) { // If current month is AFTER January
+            previousMonthInteger = monthNowInteger-1;
+        } else if (monthNowInteger == 1) { // If current month is January
+            previousMonthInteger = 12; // 12 = December
+        }
+            // Figure out how many days are in that month
+
+                // Iterate through each DAY
+                    // Prints transactions from newest to oldest
+
+
+
+        /*for (int i = transactionList.size()-1; i > -1; i--) { // From newest to oldest transaction
+            LocalDate transactionDate = transactionList.get(i).getDate();
+            LocalDate dateNow = LocalDate.now();
+
+            int transactionMonthInteger = transactionDate.getMonthValue(); // = 4
+            int dateNowInteger = dateNow.getMonthValue(); // = 4
+            // Nested-for loop: As long as 'j' is LESS THAN current date but GREATER THAN '0', DECREMENT
+            for (int j = dateNowInteger-1; j > 0; j--) { // j initialized as 3
+                if () {
+                    System.out.println(transactionList.get(i));
+
+                    transactionInMonth = true;
+                }
+            }
+
+        }*/
+        if (!transactionInMonth) { // If there are NO transactions made this current month, THIS will happen.
+            System.out.println("No transactions have been made in the previous month.");
+        }
+    }
+
+    // Displays transactions from the 1st day of the current YEAR to CURRENT DATE (e.g. January 1st to NOW)
+    public void yearToDate() {
+
+    }
+
+    // Displays all transactions from the previous YEAR (e.g. January 1st of Previous year to Dec 31st)
+    public void previousYear() {
+
+    }
+
+    // Display all transactions registered to a specific vendor (DON'T use spaces n stuff, keep it simple)
+    public void searchByVendor() {
+
     }
 
 
