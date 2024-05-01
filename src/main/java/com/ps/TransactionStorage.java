@@ -13,7 +13,7 @@ public class TransactionStorage {
     private ArrayList<Transaction> transactionList = new ArrayList<>(); // List of all transactions
 
     public TransactionStorage() {
-        this.transactionList = new ArrayList<>();;
+        this.transactionList = new ArrayList<>();
     }
 
     // Adds a transaction to an ArrayList of transactions
@@ -28,7 +28,8 @@ public class TransactionStorage {
         System.out.println("                              -- Transactions --                              \n");
         System.out.println("(Newest - Oldest transaction)");
         System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
-        for (int i = transactionList.size()-1; i > -1; i--) { // From newest to oldest transaction
+
+        for (int i = transactionList.size() - 1; i > -1; i--) { // From newest to oldest transaction
             System.out.println(transactionList.get(i));
         }
     }
@@ -41,9 +42,11 @@ public class TransactionStorage {
         System.out.println("                              -- Transactions --                              \n");
         System.out.println("(Newest - Oldest transaction)");
         System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
+
         for (int i = transactionList.size()-1; i > -1; i--) { // From newest to oldest transaction
             float transactionAmount = transactionList.get(i).getAmount();
             float absTransactionAmount = Math.abs(transactionAmount); // Absolute value of transaction amount
+
             if (transactionAmount == absTransactionAmount) {
                 System.out.println(transactionList.get(i));
 
@@ -63,9 +66,11 @@ public class TransactionStorage {
         System.out.println("                              -- Transactions --                              \n");
         System.out.println("(Newest - Oldest transaction)");
         System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
+
         for (int i = transactionList.size()-1; i > -1; i--) { // From newest to oldest transaction
             float transactionAmount = transactionList.get(i).getAmount();
             float absTransactionAmount = Math.abs(transactionAmount); // Absolute value of transaction amount
+
             if (transactionAmount != absTransactionAmount) {
                 System.out.println(transactionList.get(i));
 
@@ -82,10 +87,16 @@ public class TransactionStorage {
         boolean transactionInMonth = false;
 
         for (int i = transactionList.size()-1; i > -1; i--) { // From newest to oldest transaction
-            LocalDate transactionDate = transactionList.get(i).getDate();
+            Transaction transaction = transactionList.get(i); // A single transaction
+            LocalDate transactionDate = transaction.getDate(); // Date of a transaction
             LocalDate dateNow = LocalDate.now();
-            if (transactionDate.getMonthValue() == dateNow.getMonthValue()
-                    && transactionDate.getYear() == dateNow.getYear()) {
+
+            int transactionMonth = transactionDate.getMonthValue(); // Month of transaction in integers
+            int transactionYear = transactionDate.getYear(); // Year of transaction
+            int monthNow = dateNow.getMonthValue(); // Current month in integers
+            int yearNow = dateNow.getYear(); // Current year
+
+            if (transactionMonth == monthNow && transactionYear == yearNow) {
                 System.out.println(transactionList.get(i));
 
                 transactionInMonth = true;
@@ -117,12 +128,14 @@ public class TransactionStorage {
                     // Prints transactions from newest to oldest*/
 
         // Part1: Display transactions from previous month
-        System.out.println("----------------------------");
-        System.out.println("Previous month transactions");
-        System.out.println("----------------------------\n");
+//        System.out.println("----------------------------");
+//        System.out.println("Previous month transactions");
+//        System.out.println("----------------------------\n");
         for (int i = transactionList.size()-1; i > -1; i--) { // From newest to oldest transaction
-            LocalDate transactionDate = transactionList.get(i).getDate(); // Date of a transaction
+            Transaction transaction = transactionList.get(i); // A single transaction
+            LocalDate transactionDate = transaction.getDate(); // Date of a transaction
             LocalDate dateNow = LocalDate.now(); // Current date
+
             int transactionMonth = transactionDate.getMonthValue(); // Month of transaction in integers
             int transactionYear = transactionDate.getYear(); // Year of transaction
             int monthNow = dateNow.getMonthValue(); // Current month in integers
@@ -139,7 +152,7 @@ public class TransactionStorage {
                 }
             } else if (monthNow == 1) { // If current month is January
                 previousMonth = 12; // 12 = December
-                if (transactionMonth+11 == previousMonth && transactionYear-1 == previousYear) {
+                if (transactionMonth == previousMonth && transactionYear == previousYear) {
                     System.out.println(transactionList.get(i));
 
                     transactionInPreviousMonth = true;
@@ -147,13 +160,8 @@ public class TransactionStorage {
             }
         }
         if (!transactionInPreviousMonth) { // If there are NO transactions made in the previous month, THIS will happen.
-            System.out.println("No transactions have been made in the previous month.\n");
+            System.out.println("No transactions have been made in the previous month.");
         }
-        // Part 2: Displays transactions in current month
-        System.out.println("----------------------------");
-        System.out.println("Current month transactions  ");
-        System.out.println("----------------------------\n");
-        monthToDate();
     }
 
     // Displays transactions from the 1st day of the current YEAR to CURRENT DATE (e.g. January 1st to NOW)
@@ -161,8 +169,10 @@ public class TransactionStorage {
         boolean transactionInCurrentYear = false;
 
         for (int i = transactionList.size()-1; i > -1; i--) { // From newest to oldest transaction
-            LocalDate transactionDate = transactionList.get(i).getDate(); // Date of a transaction
+            Transaction transaction = transactionList.get(i); // A single transaction
+            LocalDate transactionDate = transaction.getDate(); // Date of a transaction
             LocalDate dateNow = LocalDate.now(); // Current date
+
             int transactionYear = transactionDate.getYear(); // Year of transaction
             int yearNow = dateNow.getYear(); // Current year
 
@@ -173,18 +183,57 @@ public class TransactionStorage {
             }
         }
         if (!transactionInCurrentYear) {
-            System.out.println("No transactions have been made this year.\n");
+            System.out.println("No transactions have been made this year.");
         }
     }
 
     // Displays all transactions from the previous YEAR (e.g. January 1st of Previous year to Dec 31st)
     public void previousYear() {
+        boolean transactionInPreviousYear = false;
 
+        for (int i = transactionList.size()-1; i > -1; i--) { // From newest to oldest transaction
+            Transaction transaction = transactionList.get(i); // A single transaction
+            LocalDate transactionDate = transaction.getDate(); // Date of a transaction
+            LocalDate dateNow = LocalDate.now(); // Current date
+
+            int transactionYear = transactionDate.getYear(); // Year of transaction
+            int yearNow = dateNow.getYear(); // Current year
+            int previousYear = yearNow-1; // Previous year
+
+            if (transactionYear == previousYear) {
+                System.out.println(transactionList.get(i));
+
+                transactionInPreviousYear = true;
+            }
+        }
+        if (!transactionInPreviousYear) { // If there are NO transactions made in the previous year, THIS will happen.
+            System.out.println("No transactions have been made in the previous year.");
+        }
     }
 
     // Display all transactions registered to a specific vendor (DON'T use spaces n stuff, keep it simple)
-    public void searchByVendor(String vendor) {
+    public void searchByVendor(String inputVendor) {
+        boolean vendorMadeTransaction = false;
 
+        for (int i = transactionList.size()-1; i > -1; i--) { // From newest to oldest transaction
+            Transaction transaction = transactionList.get(i);
+            String transactionVendor = transaction.getVendor();
+
+            if (transactionVendor.equalsIgnoreCase(inputVendor)) {
+                if (i == transactionList.size()-1) { // Want this to only print ONCE
+                    System.out.println("\n                            Search by Vendor Report                          ");
+                    System.out.println("                             -- Transactions --                             \n");
+                    System.out.println("(Newest - Oldest transaction)");
+                    System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
+                }
+                System.out.println(transaction);
+
+                vendorMadeTransaction = true;
+            }
+        }
+        if (!vendorMadeTransaction) { // If there are NO transactions made by the searched vendor from user input, THIS will happen.
+            System.out.println("\nThe vendor entered is not registered in our system.");
+        }
     }
 
 

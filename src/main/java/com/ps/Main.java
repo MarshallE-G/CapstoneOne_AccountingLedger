@@ -26,7 +26,6 @@ public class Main {
         transactionList.displayAllTransactions();
         transactionList.displayDeposits();
         transactionList.displayPayments();
-//        transactionList.monthToDate();
 
         String menuSelection;
 
@@ -114,6 +113,9 @@ public class Main {
 
                 transactionList.addTransactionToList(transaction);
             }
+            if ((line = bufReader.readLine()) == null) {
+                System.out.println("\nNo transactions have been made.");
+            }
 
             bufReader.close();
         } catch (IOException e) {
@@ -129,39 +131,47 @@ public class Main {
             // Have to append data to the end of the .txt file so that it doesn't overwrite the previous output(s) to the file.
             // The append argument is set to "true" for the FileWriter.
             BufferedWriter bufWriter = new BufferedWriter(new FileWriter("transactions.txt", true));
-            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-            String formattedDate = transaction.getDate().format(dateFormatter);
-            String formattedTime = transaction.getTime().format(timeFormatter);
+            BufferedReader bufReader = new BufferedReader(new FileReader("transactions.txt"));
 
-            bufWriter.write(
-                    formattedDate + "|" +
-                    formattedTime + "|" +
-                    String.format("%s|%s|%.2f\n",
-                    transaction.getDescription(),
-                    transaction.getVendor(),
-                    transaction.getAmount()
-                    ));
+            String line;
+            if ((line = bufReader.readLine()) != null) {
+                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+                String formattedDate = transaction.getDate().format(dateFormatter);
+                String formattedTime = transaction.getTime().format(timeFormatter);
 
-            System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
-            if (transaction.getAmount() == Math.abs(transaction.getAmount())) { // If credit: prints NO negative sign
-                System.out.printf("Added transaction: %s | %s | %s | %s | $%.2f\n", // For when you add a transaction (credit/debit)
-                        formattedDate,
-                        formattedTime,
-                        transaction.getDescription(),
-                        transaction.getVendor(),
-                        transaction.getAmount());
-            } else if (transaction.getAmount() != Math.abs(transaction.getAmount())) { // If debit: prints negative sign
-                System.out.printf("Added transaction: %s | %s | %s | %s | -$%.2f\n", // For when you add a transaction (credit/debit)
-                        formattedDate,
-                        formattedTime,
-                        transaction.getDescription(),
-                        transaction.getVendor(),
-                        Math.abs(transaction.getAmount()));
+                bufWriter.write(
+                        formattedDate + "|" +
+                                formattedTime + "|" +
+                                String.format("%s|%s|%.2f\n",
+                                        transaction.getDescription(),
+                                        transaction.getVendor(),
+                                        transaction.getAmount()
+                                ));
+
+                System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
+                if (transaction.getAmount() == Math.abs(transaction.getAmount())) { // If credit: prints NO negative sign
+                    System.out.printf("Added transaction: %s | %s | %s | %s | $%.2f\n", // For when you add a transaction (credit/debit)
+                            formattedDate,
+                            formattedTime,
+                            transaction.getDescription(),
+                            transaction.getVendor(),
+                            transaction.getAmount());
+                } else if (transaction.getAmount() != Math.abs(transaction.getAmount())) { // If debit: prints negative sign
+                    System.out.printf("Added transaction: %s | %s | %s | %s | -$%.2f\n", // For when you add a transaction (credit/debit)
+                            formattedDate,
+                            formattedTime,
+                            transaction.getDescription(),
+                            transaction.getVendor(),
+                            Math.abs(transaction.getAmount()));
+                }
+
+                System.out.println("Printed Successfully......");
+            } else {
+                System.out.println("No transactions have been made.");
             }
 
-            System.out.println("Printed Successfully......");
-
+            bufReader.close();
             bufWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -327,6 +337,7 @@ public class Main {
 
                 transactionList.monthToDate();
 
+                // Do this to leave this report page
                 do {
                     System.out.println("\nEnter B to leave page:");
                     backButton = scanner.next();
@@ -345,6 +356,7 @@ public class Main {
 
                 transactionList.previousMonth();
 
+                // Do this to leave this report page
                 do {
                     System.out.println("\nEnter B to leave page:");
                     backButton = scanner.next();
@@ -363,6 +375,7 @@ public class Main {
 
                 transactionList.yearToDate();
 
+                // Do this to leave this report page
                 do {
                     System.out.println("\nEnter B to leave page:");
                     backButton = scanner.next();
@@ -374,13 +387,14 @@ public class Main {
                 } while (!backButton.equals("B"));
                 break;
             case "4": // Previous Year
-                System.out.println("\n                            Previous Date Report                          ");
+                System.out.println("\n                            Previous Year Report                          ");
                 System.out.println("                             -- Transactions --                             \n");
                 System.out.println("(Newest - Oldest transaction)");
                 System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
 
+                transactionList.previousYear();
 
-
+                // Do this to leave this report page
                 do {
                     System.out.println("\nEnter B to leave page:");
                     backButton = scanner.next();
@@ -398,13 +412,11 @@ public class Main {
                 System.out.println("Enter here:");
                 vendor = scanner.next();
 
-                System.out.println("\n                            Search by Vendor Report                          ");
-                System.out.println("                             -- Transactions --                             \n");
-                System.out.println("(Newest - Oldest transaction)");
-                System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
+                // Moved page header to inside the searchByVendor() method.
 
+                transactionList.searchByVendor(vendor);
 
-
+                // Do this to leave this report page
                 do {
                     System.out.println("\nEnter B to leave page:");
                     backButton = scanner.next();
