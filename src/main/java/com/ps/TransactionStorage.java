@@ -21,17 +21,27 @@ public class TransactionStorage {
         transactionList.add(transaction);
     }
 
+    // Clears every transaction from the system/ArrayList
+    public void clearTransactionList() {
+        transactionList.clear();
+    }
+
 // Ledger/Report Menu filtering methods (from the newest transaction to oldest)
     // Displays a list of ALL transactions within the transactionList ArrayList
     public void displayAllTransactions() {
-        System.out.println("\n                            All Transaction Entries                            ");
-        System.out.println("                              -- Transactions --                              \n");
-        System.out.println("(Newest - Oldest transaction)");
-        System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
+        if (!Main.isFileEmpty()) { // If the transactions.txt file is NOT empty, do this...
+            System.out.println("\n                            All Transaction Entries                            ");
+            System.out.println("                              -- Transactions --                              \n");
+            System.out.println("(Newest - Oldest transaction)");
+            System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
 
-        for (int i = transactionList.size() - 1; i > -1; i--) { // From newest to oldest transaction
-            System.out.println(transactionList.get(i));
+            for (int i = transactionList.size() - 1; i > -1; i--) { // From newest to oldest transaction
+                System.out.println(transactionList.get(i));
+            }
+        } else { // If the transactions.txt file IS empty, do this...
+            System.out.println("\nThere are no transactions in the system.\n");
         }
+
     }
 
     // Displays a list of all DEPOSITS within the transactionList ArrayList
