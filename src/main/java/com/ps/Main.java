@@ -1,10 +1,6 @@
 package com.ps;
 
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -20,6 +16,7 @@ public class Main {
     static final String GREEN = "\u001B[32m";
     static final String RED = "\u001B[31m";
     static final String END = "\u001B[0m";
+//    static File tempFile = new File("temp.txt"); // To hold transactions.txt data
 
     public static void main(String[] args) {
         /*
@@ -29,6 +26,7 @@ public class Main {
         Positive --> Deposit (credits)
          */
         Scanner scanner = new Scanner(System.in);
+
 
 
         readFromFile();
@@ -85,7 +83,7 @@ public class Main {
     public static void readAndOverwrite(TransactionStorage transactionList) {
         try {
             BufferedReader bufReader3 = new BufferedReader(new FileReader("transactions.txt")); // bufReader2 is in isFileEmpty() method
-            BufferedWriter bufWriter2 = new BufferedWriter(new FileWriter("transactions.txt", true));
+            BufferedWriter bufWriter2 = new BufferedWriter(new FileWriter("temp.txt", true));
 
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
