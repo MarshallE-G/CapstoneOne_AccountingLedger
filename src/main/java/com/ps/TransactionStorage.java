@@ -9,28 +9,10 @@ This class keeps track of all transactions.
 
 // No Getters nor Setters
 public class TransactionStorage {
-    private Transaction transaction; // A single transaction
     private ArrayList<Transaction> transactionList = new ArrayList<>(); // List of all transactions
 
     public TransactionStorage() {
         this.transactionList = new ArrayList<>();
-    }
-
-    // Had to add this since I couldn't use the ArrayList methods in the Main class.
-    public Transaction getTransaction(int num) {
-        return transactionList.get(num);
-    }
-
-    // Had to add this since I couldn't use the ArrayList methods in the Main class.
-    public boolean isTransactionListEmpty() {
-        if (transactionList.isEmpty()) { // If it IS empty
-            return true;
-        }
-        return false;
-    }
-
-    public int transactionListSize() {
-        return transactionList.size();
     }
 
     // Adds a transaction to an ArrayList of transactions

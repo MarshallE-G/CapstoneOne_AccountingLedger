@@ -10,13 +10,11 @@ import java.util.Scanner;
 public class Main {
     // Static global variable for transactions
     static TransactionStorage transactionList = new TransactionStorage();
-    static ArrayList<Integer> numOfFileLines = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
     // ANSI code
     static final String GREEN = "\u001B[32m";
     static final String RED = "\u001B[31m";
     static final String END = "\u001B[0m";
-//    static File tempFile = new File("temp.txt"); // To hold transactions.txt data
 
     public static void main(String[] args) {
         /*
@@ -30,7 +28,6 @@ public class Main {
 
 
         readFromFile();
-        readAndOverwrite(transactionList);
         //length = how many elements are in the array.
 
         String menuSelection; // For Home Menu options
@@ -78,41 +75,6 @@ public class Main {
             }
         } while (!menuSelection.equalsIgnoreCase("X"));
         scanner.close();
-    }
-
-    public static void readAndOverwrite(TransactionStorage transactionList) {
-        try {
-            BufferedReader bufReader3 = new BufferedReader(new FileReader("transactions.txt")); // bufReader2 is in isFileEmpty() method
-            BufferedWriter bufWriter2 = new BufferedWriter(new FileWriter("temp.txt", true));
-
-            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-            Transaction transaction;
-
-            String line;
-            int lineNum = 1;
-            while ((line = bufReader3.readLine()) != null) {
-                if (line.isBlank() && !transactionList.isTransactionListEmpty()
-                        && transactionList.transactionListSize() >= lineNum) { // If the ArrayList is NOT empty
-                    transaction = transactionList.getTransaction(lineNum-1);
-                    String formattedDate = transaction.getDate().format(dateFormatter);
-                    String formattedTime = transaction.getTime().format(timeFormatter);
-                    line = line.replaceAll(line,
-                            formattedDate + "|" +
-                                    formattedTime + "|" +
-                                    String.format("%s|%s|%.2f\n",
-                                            transaction.getDescription(),
-                                            transaction.getVendor(),
-                                            transaction.getAmount()
-                                    ));
-                    bufWriter2.write(line);
-                }
-                lineNum++;
-            }
-            bufReader3.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     // readFromFile method to read from File
@@ -235,17 +197,13 @@ public class Main {
                     bufReader2.close();
 
                     return false; // If file is NOT empty, returns "false"
-                } else {
-                    bufReader2.close();
-
-                    return true; // If file IS empty, returns "true"
                 }
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return false; // Just added this cuz I had to
+        return true; // Just added this cuz I had to
     }
 
 // Static methods for Menus
