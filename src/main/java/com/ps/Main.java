@@ -11,10 +11,6 @@ public class Main {
     // Static global variable for transactions
     static TransactionStorage transactionList = new TransactionStorage();
     Scanner scanner = new Scanner(System.in);
-    // ANSI code
-    static final String GREEN = "\u001B[32m";
-    static final String RED = "\u001B[31m";
-    static final String END = "\u001B[0m";
 
     public static void main(String[] args) {
         /*
@@ -25,10 +21,7 @@ public class Main {
          */
         Scanner scanner = new Scanner(System.in);
 
-
-
         readFromFile();
-        //length = how many elements are in the array.
 
         String menuSelection; // For Home Menu options
         do {
@@ -291,18 +284,19 @@ public class Main {
             // **Ledger Menu**
             System.out.println("* * * * * * * *");
             System.out.println("* Ledger Menu *");
-            System.out.println("* * * * * * * * \n");
+            System.out.println("* * * * * * * *\n");
+            System.out.println("Please select from the following menu options:");
 
             // Option A: All
-            System.out.println("Enter A to view All Transaction Entries");
+            System.out.println("\tEnter A to view All Transaction Entries");
             // Option D: Deposits
-            System.out.println("Enter D to view Deposit Entries");
+            System.out.println("\tEnter D to view Deposit Entries");
             // Option P: Payments
-            System.out.println("Enter P to view Payment/Debit Entries");
+            System.out.println("\tEnter P to view Payment/Debit Entries");
             // Option R: ***Report Menu*** (display transactions based on filter options)
-            System.out.println("Enter R for Reports Menu");
+            System.out.println("\tEnter R for Reports Menu");
             // Option H: Home
-            System.out.println("Enter H to GO BACK to Home Menu");
+            System.out.println("\tEnter H to GO BACK to Home Menu");
 
             System.out.println("\nEnter selection here: ");
             ledgerMenuSelection = scanner.next();

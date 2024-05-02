@@ -10,6 +10,7 @@ public class Transaction {
     private String description;
     private String vendor;
     private float amount;
+    private ColorsAndGrapics style = new ColorsAndGrapics();
 
     // Constructor
     public Transaction(LocalDate date, LocalTime time, String description, String vendor, float amount) {
@@ -60,9 +61,9 @@ public class Transaction {
     @Override
     public String toString() {
         if (amount == Math.abs(amount)) {
-            return date + " | " + time + " | " + description + " | " + vendor + " | " + Main.GREEN + "$" + amount + Main.END;
+            return date + " | " + time + " | " + description + " | " + vendor + " | " + style.GREEN + "$" + amount + style.ENDCOLOR;
         } else if (amount != Math.abs(amount)) {
-            return date + " | " + time + " | " + description + " | " + vendor + " | " + Main.RED + "-$" + Math.abs(amount) + Main.END;
+            return date + " | " + time + " | " + description + " | " + vendor + " | " + style.RED + "-$" + Math.abs(amount) + style.ENDCOLOR;
         }
         return null;
     }
