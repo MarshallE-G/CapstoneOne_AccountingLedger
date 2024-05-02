@@ -1,6 +1,10 @@
 package com.ps;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -10,6 +14,10 @@ public class Main {
     // Static global variable for transactions
     static TransactionStorage transactionList = new TransactionStorage();
     Scanner scanner = new Scanner(System.in);
+    // ANSI code
+    static final String GREEN = "\u001B[32m";
+    static final String RED = "\u001B[31m";
+    static final String END = "\u001B[0m";
 
     public static void main(String[] args) {
         /*
@@ -25,7 +33,7 @@ public class Main {
 
         String menuSelection; // For Home Menu options
         do {
-            homeMenu(); // Displays Home menu options
+            homeMenu(); // ONLY displays Home menu options
 
             System.out.println("\nEnter selection here:");
             menuSelection = scanner.next();
@@ -67,25 +75,6 @@ public class Main {
                     break;
             }
         } while (!menuSelection.equalsIgnoreCase("X"));
-
-            // Do-while loop
-                // **Ledger Menu**
-                    // Switch statement
-                        // Option A: All
-                        // Option D: Deposits
-                        // Option P: Payments
-                    // Do-while loop
-                        // Option R: ***Report Menu*** (display transactions based on filter options)
-                            // Switch statement
-                                // Option 1) Month To Date - first of the month that you're in (e.g. April 1st to NOW)
-                                // Option 2) Previous Month - Everything in the previous month (e.g. March)
-                                // Option 3) Year To Date - January 1st to NOW
-                                // Option 4) Previous Year - January 1st of Previous year to NOW
-                                // Option 5) Search by Vendor - Ask for vendor's name. (DON'T use spaces n stuff, keep it simple)
-                                // Option 0) Back
-                    // End of Report's Do-while loop
-                        // Option H: Home
-            // End of Ledger Menu Do-while loop
         scanner.close();
     }
 

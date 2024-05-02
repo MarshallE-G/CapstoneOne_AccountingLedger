@@ -1,9 +1,7 @@
 package com.ps;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /*
 This class keeps track of all transactions.
@@ -135,26 +133,6 @@ public class TransactionStorage {
     public void previousMonth() {
         boolean transactionInPreviousMonth = false;
 
-//        int monthNowInteger;
-
-        // Find previous month
-        /*LocalDate dateNow = LocalDate.now(); // Current date
-        int monthNowInteger = dateNow.getMonthValue(); // Current month in numbers (= 4)
-        int previousMonthInteger = 0;
-        if (monthNowInteger > 1) { // If current month is AFTER January
-            previousMonthInteger = monthNowInteger-1;
-        } else if (monthNowInteger == 1) { // If current month is January
-            previousMonthInteger = 12; // 12 = December
-        }
-            // Figure out how many days are in that month
-
-                // Iterate through each DAY
-                    // Prints transactions from newest to oldest*/
-
-        // Part1: Display transactions from previous month
-//        System.out.println("----------------------------");
-//        System.out.println("Previous month transactions");
-//        System.out.println("----------------------------\n");
         if (!Main.isFileEmpty()) { // If the transactions.txt file is NOT empty, do this...
             for (int i = transactionList.size() - 1; i > -1; i--) { // From newest to oldest transaction
                 Transaction transaction = transactionList.get(i); // A single transaction
@@ -275,85 +253,5 @@ public class TransactionStorage {
             System.out.println("\nThere are no transactions in the system.\n");
         }
     }
-
-// Challenge/Bonus tasks (very complicated)
-    // Custom Search
-    /*public void customSearch(Scanner scanner) {
-        // Search values (ledger entry properties)
-            // Start Date
-        LocalDate startDate;
-            // End Date
-        LocalDate endDate;
-            // Description
-        String description;
-            // Vendor
-        String vendor;
-            // Amount
-        float amount;
-//        float amount;
-
-        boolean hasStartDate = false;
-        boolean hasEndDate = false;
-        boolean hasDescription = false;
-        boolean hasVendor = false;
-        boolean hasAmount = false;
-
-        // Ask for: Start Date
-        System.out.println("What is the start date of the transaction?");
-        startDate = LocalDate.parse(scanner.next());
-
-        // Ask for: End Date
-        System.out.println("What is the end date of the transaction?");
-        endDate = LocalDate.parse(scanner.next());
-
-        // Ask for: Description
-        System.out.println("What is the description of the transaction?");
-        description = scanner.next();
-
-        // Ask for: Vendor
-        System.out.println("What is the name of the vendor that the transaction is registered to?");
-        vendor = scanner.next();
-
-        // Ask for: Amount
-        System.out.println("What is the amount recorded in the transaction?");
-//        amount = scanner.nextFloat();
-        amount = Float.parseFloat(scanner.next());
-
-        // If user inputs a field, filter based on that (those) field(s)
-            // Not using "else" because I want all of these if-statements to run.
-        if (!startDate.isEmpty()) {
-            hasStartDate = true;
-        }
-        if (!endDate.isEmpty()) {
-            hasEndDate = true;
-        }
-        if (!description.isEmpty()) {
-            hasDescription = true;
-        }
-        if (!vendor.isEmpty()) {
-            hasVendor = true;
-        }
-        if (!amount.isEmpty()) {
-            hasAmount = true;
-        }
-
-        if (hasStartDate) {
-            if () {
-
-            }
-
-        }
-
-        for (int i = transactionList.size()-1; i > 0; i--) {
-            int startDateMonth = startDate.getMonthValue();
-            int endDateMonth = endDate.getMonthValue();
-            if () {
-
-            }
-        }
-
-
-        // If user does NOT input a field, do NOT filter based on that (those) field(s)
-    }*/
 
 }
