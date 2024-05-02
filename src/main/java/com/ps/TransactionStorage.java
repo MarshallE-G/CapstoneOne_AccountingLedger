@@ -10,6 +10,7 @@ This class keeps track of all transactions.
 // No Getters nor Setters
 public class TransactionStorage {
     private ArrayList<Transaction> transactionList = new ArrayList<>(); // List of all transactions
+    private ColorsAndGrapics style = new ColorsAndGrapics();
 
     public TransactionStorage() {
         this.transactionList = new ArrayList<>();
@@ -29,9 +30,10 @@ public class TransactionStorage {
     // Displays a list of ALL transactions within the transactionList ArrayList
     public void displayAllTransactions() {
         if (!Main.isFileEmpty()) { // If the transactions.txt file is NOT empty, do this...
-            System.out.println("\n                            All Transaction Entries                            ");
+            System.out.println("\n" + style.BOLD + style.BRIGHT_BLUE_BACKGROUND + style.BLACK +
+                    "                            All Transaction Entries                            " + style.END_BOLD + style.END_COLOR);
             System.out.println("                              -- Transactions --                              \n");
-            System.out.println("(Newest - Oldest transaction)");
+            System.out.println(style.ITALIC + "(Newest - Oldest transaction)" + style.END_ITALIC);
             System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
 
             for (int i = transactionList.size() - 1; i > -1; i--) { // From newest to oldest transaction
@@ -48,9 +50,10 @@ public class TransactionStorage {
         boolean anyDeposits = false;
 
         if (!Main.isFileEmpty()) { // If the transactions.txt file is NOT empty, do this...
-            System.out.println("\n                               Deposit Entries                                ");
+            System.out.println("\n" + style.BOLD + style.BRIGHT_GREEN_BACKGROUND + style.BLACK +
+                    "                               Deposit Entries                                " + style.END_BOLD + style.END_COLOR);
             System.out.println("                              -- Transactions --                              \n");
-            System.out.println("(Newest - Oldest transaction)");
+            System.out.println(style.ITALIC + "(Newest - Oldest transaction)" + style.END_ITALIC);
             System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
 
             for (int i = transactionList.size() - 1; i > -1; i--) { // From newest to oldest transaction
@@ -76,9 +79,10 @@ public class TransactionStorage {
         boolean anyPayments = false;
 
         if (!Main.isFileEmpty()) { // If the transactions.txt file is NOT empty, do this...
-            System.out.println("\n                             Payment/Debit Entries                                ");
+            System.out.println("\n" + style.BOLD + style.RED_BACKGROUND + style.BLACK +
+                    "                             Payment/Debit Entries                                " + style.END_BOLD + style.END_COLOR);
             System.out.println("                              -- Transactions --                              \n");
-            System.out.println("(Newest - Oldest transaction)");
+            System.out.println(style.ITALIC + "(Newest - Oldest transaction)" + style.END_ITALIC);
             System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
 
             for (int i = transactionList.size() - 1; i > -1; i--) { // From newest to oldest transaction
@@ -227,6 +231,7 @@ public class TransactionStorage {
     // Display all transactions registered to a specific vendor (DON'T use spaces n stuff, keep it simple)
     public void searchByVendor(String inputVendor) {
         boolean vendorMadeTransaction = false;
+        boolean firstTransaction = true;
 
         if (!Main.isFileEmpty()) { // If the transactions.txt file is NOT empty, do this...
             for (int i = transactionList.size() - 1; i > -1; i--) { // From newest to oldest transaction
@@ -234,11 +239,14 @@ public class TransactionStorage {
                 String transactionVendor = transaction.getVendor();
 
                 if (transactionVendor.equalsIgnoreCase(inputVendor)) {
-                    if (i == transactionList.size() - 1) { // Want this to only print ONCE
-                        System.out.println("\n                            Search by Vendor Report                          ");
+                    if (firstTransaction) { // Want this to only print ONCE
+                        System.out.println("\n" + style.BOLD + style.BLACK_BACKGROUND + style.BRIGHT_WHITE +
+                                "                            Search by Vendor Report                          " + style.END_BOLD + style.END_COLOR);
                         System.out.println("                             -- Transactions --                             \n");
-                        System.out.println("(Newest - Oldest transaction)");
+                        System.out.println(style.ITALIC + "(Newest - Oldest transaction)" + style.END_ITALIC);
                         System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
+
+                        firstTransaction = false;
                     }
                     System.out.println(transaction);
 

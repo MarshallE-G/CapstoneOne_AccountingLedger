@@ -61,9 +61,11 @@ public class Transaction {
     @Override
     public String toString() {
         if (amount == Math.abs(amount)) {
-            return date + " | " + time + " | " + description + " | " + vendor + " | " + style.GREEN + "$" + amount + style.ENDCOLOR;
+            return date + " | " + time + " | " + description + " | " + vendor + " | " + style.BRIGHT_GREEN
+                    + "$" + amount + style.END_COLOR;
         } else if (amount != Math.abs(amount)) {
-            return date + " | " + time + " | " + description + " | " + vendor + " | " + style.RED + "-$" + Math.abs(amount) + style.ENDCOLOR;
+            return date + " | " + time + " | " + description + " | " + vendor + " | " + style.BRIGHT_RED +
+                    "-$" + Math.abs(amount) + style.END_COLOR;
         }
         return null;
     }

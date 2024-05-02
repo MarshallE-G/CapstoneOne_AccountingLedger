@@ -22,7 +22,7 @@ public class ColorsAndGrapics {
     public final String BRIGHT_CYAN = "\u001b[96m"; public final String BRIGHT_CYAN_BACKGROUND = "\u001b[106m";
     public final String BRIGHT_WHITE = "\u001b[97m"; public final String BRIGHT_WHITE_BACKGROUND = "\u001b[107m";
     public final String DEFAULT_COLOR = "\u001b[39m"; public final String DEFAULT_BACKGROUND = "\u001b[49m";
-    public final String ENDCOLOR = "\u001B[0m";
+    public final String END_COLOR = "\u001B[0m";
 
         // Graphics Modes
     public final String BOLD = "\u001b[1m"; public final String END_BOLD = "\u001b[22m";

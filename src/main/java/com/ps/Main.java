@@ -4,13 +4,13 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     // Static global variable for transactions
     static TransactionStorage transactionList = new TransactionStorage();
     Scanner scanner = new Scanner(System.in);
+    private static ColorsAndGrapics style = new ColorsAndGrapics();
 
     public static void main(String[] args) {
         /*
@@ -23,47 +23,49 @@ public class Main {
 
         readFromFile();
 
-        String menuSelection; // For Home Menu options
+        String menuSelection;
         do {
             homeMenu(); // ONLY displays Home menu options
 
-            System.out.println("\nEnter selection here:");
+            System.out.println("\n" + style.ITALIC + "Enter selection here:" + style.END_ITALIC);
             menuSelection = scanner.next();
 
             switch (menuSelection.toUpperCase()) { // Making every input uppercase acts as a make-shift ignore-case.
                 case "D":
-                    System.out.println("\nAdd deposit selected.\n");
+                    System.out.println("\nAdd " + style.BRIGHT_GREEN + "Deposit " + style.END_COLOR + "selected.\n");
 
                     addDeposit();
                     addNewDataToList();
                     break;
                 case "P":
-                    System.out.println("\nMake a payment (debit) selected.\n");
+                    System.out.println("\nMake a " + style.BRIGHT_RED + "Payment (debit) " + style.END_COLOR + "selected.\n");
 
                     makePayment();
                     addNewDataToList();
                     break;
                 case "L":
-                    System.out.println("\nLedger Menu selected.\n");
+                    System.out.println("\n" + style.BRIGHT_YELLOW + "Ledger Menu " + style.END_COLOR + "selected.\n");
 
                     ledgerMenu(scanner);
                     break;
                 case "X":
+                    System.out.println(style.ITALIC + style.BOLD + "Exiting..." + style.END_ITALIC + style.END_BOLD);
                     break;
                 default:
-                    System.out.println("ERROR: Must type either D, P, L, or X!");
+                    System.out.println(style.BOLD + style.RED + style.BLACK_BACKGROUND + "ERROR: Must type either D, P, L, or X!" + style.END_BOLD + style.END_COLOR);
 
                     String backButton;
                     // "Back" button
                     do {
-                        System.out.println("\nEnter B to leave page:");
+                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
                         backButton = scanner.next();
                         if (backButton.equalsIgnoreCase("B")) {
                             break;
                         } else {
-                            System.out.println("\nERROR: Must type B and press 'Enter' to leave page.\n");
+                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
+                                    " and press 'Enter' to leave page.");
                         }
-                    } while (!backButton.equals("B"));
+                    } while (!backButton.equalsIgnoreCase("B"));
                     break;
             }
         } while (!menuSelection.equalsIgnoreCase("X"));
@@ -158,14 +160,14 @@ public class Main {
 
             System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
             if (transaction.getAmount() == Math.abs(transaction.getAmount())) { // If credit: prints NO negative sign
-                System.out.printf("Added transaction: %s | %s | %s | %s | $%.2f\n", // For when you add a transaction (credit/debit)
+                System.out.printf("Added transaction: %s | %s | %s | %s | " + style.BRIGHT_GREEN + "$%.2f" + style.END_COLOR + "\n", // For when you add a transaction (credit/debit)
                         formattedDate,
                         formattedTime,
                         transaction.getDescription(),
                         transaction.getVendor(),
                         transaction.getAmount());
             } else if (transaction.getAmount() != Math.abs(transaction.getAmount())) { // If debit: prints negative sign
-                System.out.printf("Added transaction: %s | %s | %s | %s | -$%.2f\n", // For when you add a transaction (credit/debit)
+                System.out.printf("Added transaction: %s | %s | %s | %s | " + style.BRIGHT_RED + "-$%.2f" + style.END_COLOR + "\n", // For when you add a transaction (credit/debit)
                         formattedDate,
                         formattedTime,
                         transaction.getDescription(),
@@ -204,19 +206,23 @@ public class Main {
     // Home Menu display
     public static void homeMenu() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("* * * * * * *");
+        System.out.println(style.BRIGHT_WHITE + "* * * * * * *");
         System.out.println("* Home Menu *");
-        System.out.println("* * * * * * *\n");
-        System.out.println("Please select from the following menu options:");
+        System.out.println("* * * * * * *" + style.END_COLOR + "\n");
+        System.out.println(style.UNDERLINE + "Please select from the following menu options:" + style.END_UNDERLINE);
 
         // Option D: Add Deposit
-        System.out.println("\tEnter D to add a deposit");
+        System.out.println("\t" + style.GREEN_BACKGROUND + style.BRIGHT_WHITE + "Enter D" + style.END_COLOR + " to add a " +
+                style.BRIGHT_GREEN + "Deposit" + style.END_COLOR);
         // Option P: Make Payment (Debit)
-        System.out.println("\tEnter P to make a payment (debit)");
+        System.out.println("\t" + style.RED_BACKGROUND + style.BRIGHT_WHITE + "Enter P" + style.END_COLOR + " to make a " +
+                style.BRIGHT_RED + "Payment (debit)" + style.END_COLOR);
         // Option L: Ledger Menu
-        System.out.println("\tEnter L for the Ledger Menu");
+        System.out.println("\t" + style.YELLOW_BACKGROUND + style.BRIGHT_WHITE + "Enter L" + style.END_COLOR + " for the " +
+                style.BRIGHT_YELLOW + "Ledger Menu" + style.END_COLOR);
         // Option X: Exit
-        System.out.println("\tEnter X to EXIT");
+        System.out.println("\t" + style.BLACK_BACKGROUND + style.BRIGHT_WHITE + "Enter X" + style.END_COLOR + " to " +
+                style.BLACK + "EXIT" + style.END_COLOR);
     }
 
     // Add Deposit option
@@ -229,13 +235,14 @@ public class Main {
         // *Add Deposit*
             // Ask user for deposit info
                 // Description
-        System.out.println("Enter a description of the deposit (e.g. \"Invoice 1001 paid\"): ");
+        System.out.println("Enter a description of the " + style.BRIGHT_GREEN + "deposit" + style.END_COLOR +
+                " (e.g. \"Invoice 1001 paid\"): ");
         description = scanner.nextLine();
                 // Vendor
         System.out.println("Enter name of vendor (e.g. Joe): ");
         vendor = scanner.nextLine();
                 // Deposit amount
-        System.out.println("Enter deposit amount: ");
+        System.out.println("Enter " + style.BRIGHT_GREEN + "deposit" + style.END_COLOR + " amount: ");
         amount = scanner.nextFloat();
         System.out.println();
             // Save info to transactions
@@ -243,7 +250,7 @@ public class Main {
             // Output transaction to transactions file
         writeToFile(transaction);
 
-        System.out.println("\nAuto-redirecting to Home menu...\n\n");
+        System.out.println("\n" + style.ITALIC + style.BOLD + "Auto-redirecting to Home menu..." + style.END_ITALIC + style.END_BOLD + "\n\n");
     }
 
     // Make a Payment option
@@ -257,13 +264,14 @@ public class Main {
 
             // Ask user for payment/debit info
                 // Description
-        System.out.println("Enter a description of the payment/debit (e.g. \"ergonomic keyboard\"): ");
+        System.out.println("Enter a description of the " + style.BRIGHT_RED + "payment/debit" + style.END_COLOR +
+                " (e.g. \"ergonomic keyboard\"): ");
         description = scanner.nextLine();
                 // Vendor
         System.out.println("Enter name of vendor (e.g. Amazon): ");
         vendor = scanner.nextLine();
                 // Payment/debit amount
-        System.out.println("Enter payment/debit amount: ");
+        System.out.println("Enter " + style.BRIGHT_RED + "payment/debit" + style.END_COLOR + " amount: ");
         amount = -1 * scanner.nextFloat(); // Multiply inputted amount by -1 to get negative value (debit)
         System.out.println();
             // Save info to transactions
@@ -271,7 +279,7 @@ public class Main {
             // Output transaction to transactions file
         writeToFile(transaction);
 
-        System.out.println("Auto-redirecting to Home menu...\n\n");
+        System.out.println("\n" + style.ITALIC + style.BOLD + "Auto-redirecting to Home menu..." + style.END_ITALIC + style.END_BOLD + "\n\n");
     }
 
     // Ledger Menu option
@@ -279,30 +287,27 @@ public class Main {
 
 
         String ledgerMenuSelection;
-        // Do-while loop
         do {
-            // **Ledger Menu**
-            System.out.println("* * * * * * * *");
+            System.out.println(style.BRIGHT_YELLOW + "* * * * * * * *");
             System.out.println("* Ledger Menu *");
-            System.out.println("* * * * * * * *\n");
-            System.out.println("Please select from the following menu options:");
+            System.out.println("* * * * * * * *" + style.END_COLOR + "\n");
+            System.out.println(style.UNDERLINE + "Please select from the following menu options:" + style.END_UNDERLINE);
 
-            // Option A: All
-            System.out.println("\tEnter A to view All Transaction Entries");
-            // Option D: Deposits
-            System.out.println("\tEnter D to view Deposit Entries");
-            // Option P: Payments
-            System.out.println("\tEnter P to view Payment/Debit Entries");
-            // Option R: ***Report Menu*** (display transactions based on filter options)
-            System.out.println("\tEnter R for Reports Menu");
-            // Option H: Home
-            System.out.println("\tEnter H to GO BACK to Home Menu");
+            System.out.println("\t" + style.BLUE_BACKGROUND + style.BLACK + "Enter A" + style.END_COLOR + " to view "
+                    + style.BRIGHT_BLUE + "All Transaction Entries" + style.END_COLOR);
+            System.out.println("\t" + style.GREEN_BACKGROUND + style.BLACK + "Enter D" + style.END_COLOR + " to view "
+                    + style.BRIGHT_GREEN + "Deposit Entries" + style.END_COLOR);
+            System.out.println("\t" + style.RED_BACKGROUND + style.BLACK + "Enter P" + style.END_COLOR + " to view "
+                    + style.BRIGHT_RED + "Payment/Debit Entries" + style.END_COLOR);
+            System.out.println("\t" + style.MAGENTA_BACKGROUND + style.BLACK + "Enter R" + style.END_COLOR + " for "
+                    + style.BRIGHT_MAGENTA + "Reports Menu " + style.END_COLOR);
+            System.out.println("\t" + style.WHITE_BACKGROUND + style.BLACK + "Enter H" + style.END_COLOR + " to GO BACK to "
+                    + style.BRIGHT_WHITE + "Home Menu " + style.END_COLOR);
 
-            System.out.println("\nEnter selection here: ");
+            System.out.println("\n" + style.ITALIC + "Enter selection here:" + style.END_ITALIC);
             ledgerMenuSelection = scanner.next();
 
             String backButton;
-            // Switch statement
             switch (ledgerMenuSelection.toUpperCase()) { // Making every input uppercase acts as a make-shift ignore-case.
                 case "A": // All Transactions
 
@@ -310,12 +315,13 @@ public class Main {
 
                     // "Back" button
                     do {
-                        System.out.println("\nEnter B to leave page:");
+                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
                         backButton = scanner.next();
                         if (backButton.equalsIgnoreCase("B")) {
                             break;
                         } else {
-                            System.out.println("\nERROR: Must type B and press 'Enter' to leave page.\n");
+                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
+                                    " and press 'Enter' to leave page.");
                         }
                     } while (!backButton.equalsIgnoreCase("B"));
                     break;
@@ -324,12 +330,13 @@ public class Main {
 
                     // "Back" button
                     do {
-                        System.out.println("\nEnter B to leave page:");
+                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
                         backButton = scanner.next();
                         if (backButton.equalsIgnoreCase("B")) {
                             break;
                         } else {
-                            System.out.println("\nERROR: Must type B and press 'Enter' to leave page.\n");
+                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
+                                    " and press 'Enter' to leave page.");
                         }
                     } while (!backButton.equalsIgnoreCase("B"));
                     break;
@@ -338,134 +345,154 @@ public class Main {
 
                     // "Back" button
                     do {
-                        System.out.println("\nEnter B to leave page:");
+                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
                         backButton = scanner.next();
                         if (backButton.equalsIgnoreCase("B")) {
                             break;
                         } else {
-                            System.out.println("\nERROR: Must type B and press 'Enter' to leave page.\n");
+                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
+                                    " and press 'Enter' to leave page.");
                         }
                     } while (!backButton.equalsIgnoreCase("B"));
                     break;
                 case "R": // Reports Menu
+                    System.out.println("\n" + style.BRIGHT_MAGENTA + "Reports Menu " + style.END_COLOR + "selected.\n");
 
                     reportsMenu(scanner);
 
                     break;
                 case "H": // Go back to Home
-                    System.out.println("\nReturning to Home Menu...\n");
+                    System.out.println("\n" + style.ITALIC + style.BOLD + "Returning to " + style.BRIGHT_WHITE + "Home Menu" +
+                            style.END_COLOR + "..." + style.END_ITALIC + style.END_BOLD + "\n\n");
                     return; // Using this because it works better for the SYSTEM to "return" to the last point (this being the previous menu)
                 default:
-                    System.out.println("ERROR: Must type either A, D, P, R, or H!");
+                    System.out.println(style.BOLD + style.RED + style.BLACK_BACKGROUND + "ERROR: Must type either A, D, P, R, or H!"
+                            + style.END_BOLD + style.END_COLOR);
+
+                    do {
+                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
+                        backButton = scanner.next();
+                        if (backButton.equalsIgnoreCase("B")) {
+                            break;
+                        } else {
+                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
+                                    " and press 'Enter' to leave page.");
+                        }
+                    } while (!backButton.equalsIgnoreCase("B"));
                     break;
             }
         } while (!ledgerMenuSelection.equalsIgnoreCase("H"));
-        // End of Ledger Menu Do-while loop
     }
 
     // Reports Menu option
     public static void reportsMenu(Scanner scanner) {
 
         String reportsMenuSelection;
-        // Do-while loop
         do {
-            // ***Report Menu*** (display transactions based on filter options)
-            System.out.println("*  *  *  *  *  *");
+            System.out.println(style.BRIGHT_MAGENTA + "*  *  *  *  *  *");
             System.out.println("* Reports Menu *");
-            System.out.println("*  *  *  *  *  *\n");
+            System.out.println("*  *  *  *  *  *" + style.END_COLOR + "\n");
 
-            // Option 1) Month To Date - first of the month that you're in (e.g. April 1st to NOW)
-            System.out.println("Enter 1 to view transaction entries from Month to Date");
-            // Option 2) Previous Month - Everything in the previous month (e.g. March)
-            System.out.println("Enter 2 to view transaction entries from Previous Month");
-            // Option 3) Year To Date - January 1st to NOW
-            System.out.println("Enter 3 to view transaction entries from Year to Date");
-            // Option 4) Previous Year - January 1st of Previous year to NOW
-            System.out.println("Enter 4 to view transaction entries from Previous Year");
-            // Option 5) Search by Vendor - Ask for vendor's name. (DON'T use spaces n stuff, keep it simple)
-            System.out.println("Enter 5 to Search by Vendor");
-            // Option 0) Back
-            System.out.println("Enter 0 to GO BACK to Ledger Menu");
+            System.out.println(style.UNDERLINE + "Please select from the following menu options:" + style.END_UNDERLINE);
+            System.out.println("\t" + style.WHITE_BACKGROUND + style.BLACK + "Enter 1" + style.END_COLOR + " to view transaction entries from "
+                    + style.BRIGHT_WHITE + "Month to Date" + style.END_COLOR);
+            System.out.println("\t" + style.WHITE_BACKGROUND + style.BLACK + "Enter 2" + style.END_COLOR + " to view transaction entries from "
+                    + style.BRIGHT_WHITE + "Previous Month" + style.END_COLOR);
+            System.out.println("\t" + style.WHITE_BACKGROUND + style.BLACK + "Enter 3" + style.END_COLOR + " to view transaction entries from "
+                    + style.BRIGHT_WHITE + "Year to Date" + style.END_COLOR);
+            System.out.println("\t" + style.WHITE_BACKGROUND + style.BLACK + "Enter 4" + style.END_COLOR + " to view transaction entries from "
+                    + style.BRIGHT_WHITE + "Previous Year" + style.END_COLOR);
+            System.out.println("\t" + style.BLACK_BACKGROUND + style.BRIGHT_WHITE + "Enter 5" + style.END_COLOR + " to " + style.BLACK + "Search by Vendor");
+            System.out.println("\t" + style.YELLOW_BACKGROUND + style.BRIGHT_WHITE + "Enter 0" + style.END_COLOR + " to GO BACK to "
+                    + style.BRIGHT_YELLOW + "Ledger Menu " + style.END_COLOR);
 
-            System.out.println("\nEnter selection here:");
+            System.out.println("\n" + style.ITALIC + "Enter selection here:" + style.END_ITALIC);
             reportsMenuSelection = scanner.next();
 
             String backButton;
             // Switch statement
             switch (reportsMenuSelection) {
                 case "1": // Month to Date
-                    System.out.println("\n                            Month To Date Report                            ");
+                    System.out.println("\n" + style.BOLD + style.WHITE_BACKGROUND + style.BLACK +
+                            "                            Month To Date Report                            " + style.END_BOLD + style.END_COLOR);
                     System.out.println("                             -- Transactions --                             \n");
-                    System.out.println("(Newest - Oldest transaction)");
+                    System.out.println(style.ITALIC + "(Newest - Oldest transaction)" + style.END_ITALIC);
                     System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
 
                     transactionList.monthToDate();
 
                     // Do this to leave this report page
                     do {
-                        System.out.println("\nEnter B to leave page:");
+                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
                         backButton = scanner.next();
                         if (backButton.equalsIgnoreCase("B")) {
                             break;
                         } else {
-                            System.out.println("\nERROR: Must type B and press 'Enter' to leave page.\n");
+                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
+                                    " and press 'Enter' to leave page.");
                         }
                     } while (!backButton.equalsIgnoreCase("B"));
                     break;
                 case "2": // Previous Month
-                    System.out.println("\n                           Previous Month Report                          ");
+                    System.out.println("\n" + style.BOLD + style.WHITE_BACKGROUND + style.BLACK +
+                            "                           Previous Month Report                          " + style.END_BOLD + style.END_COLOR);
                     System.out.println("                             -- Transactions --                             \n");
-                    System.out.println("(Newest - Oldest transaction)");
+                    System.out.println(style.ITALIC + "(Newest - Oldest transaction)" + style.END_ITALIC);
                     System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
 
                     transactionList.previousMonth();
 
                     // Do this to leave this report page
                     do {
-                        System.out.println("\nEnter B to leave page:");
+                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
                         backButton = scanner.next();
                         if (backButton.equalsIgnoreCase("B")) {
                             break;
                         } else {
-                            System.out.println("\nERROR: Must type B and press 'Enter' to leave page.\n");
+                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
+                                    " and press 'Enter' to leave page.");
                         }
                     } while (!backButton.equalsIgnoreCase("B"));
                     break;
                 case "3": // Year to Date
-                    System.out.println("\n                            Year to Date Report                          ");
+                    System.out.println("\n" + style.BOLD + style.WHITE_BACKGROUND + style.BLACK +
+                            "                            Year to Date Report                          " + style.END_BOLD + style.END_COLOR);
                     System.out.println("                             -- Transactions --                             \n");
-                    System.out.println("(Newest - Oldest transaction)");
+                    System.out.println(style.ITALIC + "(Newest - Oldest transaction)" + style.END_ITALIC);
                     System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
 
                     transactionList.yearToDate();
 
                     // Do this to leave this report page
                     do {
-                        System.out.println("\nEnter B to leave page:");
+                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
                         backButton = scanner.next();
                         if (backButton.equalsIgnoreCase("B")) {
                             break;
                         } else {
-                            System.out.println("\nERROR: Must type B and press 'Enter' to leave page.\n");
+                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
+                                    " and press 'Enter' to leave page.");
                         }
                     } while (!backButton.equalsIgnoreCase("B"));
                     break;
                 case "4": // Previous Year
-                    System.out.println("\n                            Previous Year Report                          ");
+                    System.out.println("\n" + style.BOLD + style.WHITE_BACKGROUND + style.BLACK +
+                            "                            Previous Year Report                          " + style.END_BOLD + style.END_COLOR);
                     System.out.println("                             -- Transactions --                             \n");
-                    System.out.println("(Newest - Oldest transaction)");
+                    System.out.println(style.ITALIC + "(Newest - Oldest transaction)" + style.END_ITALIC);
                     System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
 
                     transactionList.previousYear();
 
                     // Do this to leave this report page
                     do {
-                        System.out.println("\nEnter B to leave page:");
+                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
                         backButton = scanner.next();
                         if (backButton.equalsIgnoreCase("B")) {
                             break;
                         } else {
-                            System.out.println("\nERROR: Must type B and press 'Enter' to leave page.\n");
+                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
+                                    " and press 'Enter' to leave page.");
                         }
                     } while (!backButton.equalsIgnoreCase("B"));
                     break;
@@ -476,30 +503,41 @@ public class Main {
                     System.out.println("Enter here:");
                     vendor = scanner.next();
 
-                    // Moved page header to inside the searchByVendor() method.
-
-                    transactionList.searchByVendor(vendor);
+                    transactionList.searchByVendor(vendor); // Moved page header to inside the searchByVendor() method.
 
                     // Do this to leave this report page
                     do {
-                        System.out.println("\nEnter B to leave page:");
+                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
                         backButton = scanner.next();
                         if (backButton.equalsIgnoreCase("B")) {
                             break;
                         } else {
-                            System.out.println("\nERROR: Must type B and press 'Enter' to leave page.\n");
+                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
+                                    " and press 'Enter' to leave page.");
                         }
                     } while (!backButton.equalsIgnoreCase("B"));
                     break;
                 case "0": // Go back to Ledger
-                    System.out.println("\nReturning to Ledger Menu...\n");
+                    System.out.println("\n" + style.ITALIC + style.BOLD + "Returning to " + style.BRIGHT_YELLOW + "Ledger Menu" +
+                            style.END_COLOR + "..." + style.END_ITALIC + style.END_BOLD + "\n\n");
                     return; // Using this because it works better for the SYSTEM to "return" to the last point (this being the previous menu)
                 default:
-                    System.out.println("ERROR: Must type either 1, 2, 3, 4, 5, or 0!");
+                    System.out.println(style.BOLD + style.RED + style.BLACK_BACKGROUND + "ERROR: Must type either 1, 2, 3, 4, 5, or 0!"
+                            + style.END_BOLD + style.END_COLOR);
+
+                    do {
+                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
+                        backButton = scanner.next();
+                        if (backButton.equalsIgnoreCase("B")) {
+                            break;
+                        } else {
+                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
+                                    " and press 'Enter' to leave page.");
+                        }
+                    } while (!backButton.equalsIgnoreCase("B"));
                     break;
             }
         } while (!reportsMenuSelection.equals("0"));
-        // End of Do-while loop
     }
 
 }
