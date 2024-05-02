@@ -8,11 +8,13 @@ import java.io.FileWriter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     // Static global variable for transactions
     static TransactionStorage transactionList = new TransactionStorage();
+    static ArrayList<Integer> numOfFileLines = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
     // ANSI code
     static final String GREEN = "\u001B[32m";
@@ -28,7 +30,9 @@ public class Main {
          */
         Scanner scanner = new Scanner(System.in);
 
+
         readFromFile();
+        readAndOverwrite(transactionList);
         //length = how many elements are in the array.
 
         String menuSelection; // For Home Menu options
@@ -78,6 +82,41 @@ public class Main {
         scanner.close();
     }
 
+    public static void readAndOverwrite(TransactionStorage transactionList) {
+        try {
+            BufferedReader bufReader3 = new BufferedReader(new FileReader("transactions.txt")); // bufReader2 is in isFileEmpty() method
+            BufferedWriter bufWriter2 = new BufferedWriter(new FileWriter("transactions.txt", true));
+
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+            Transaction transaction;
+
+            String line;
+            int lineNum = 1;
+            while ((line = bufReader3.readLine()) != null) {
+                if (line.isBlank() && !transactionList.isTransactionListEmpty()
+                        && transactionList.transactionListSize() >= lineNum) { // If the ArrayList is NOT empty
+                    transaction = transactionList.getTransaction(lineNum-1);
+                    String formattedDate = transaction.getDate().format(dateFormatter);
+                    String formattedTime = transaction.getTime().format(timeFormatter);
+                    line = line.replaceAll(line,
+                            formattedDate + "|" +
+                                    formattedTime + "|" +
+                                    String.format("%s|%s|%.2f\n",
+                                            transaction.getDescription(),
+                                            transaction.getVendor(),
+                                            transaction.getAmount()
+                                    ));
+                    bufWriter2.write(line);
+                }
+                lineNum++;
+            }
+            bufReader3.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     // readFromFile method to read from File
     public static void readFromFile() {
         try {
@@ -85,17 +124,18 @@ public class Main {
 
             String line;
             while ((line = bufReader1.readLine()) != null) {
-                String[] splitLine = line.split("\\|");
-                LocalDate date = LocalDate.parse(splitLine[0]);
-                LocalTime time = LocalTime.parse(splitLine[1]);
-                String description = splitLine[2];
-                String vendor = splitLine[3];
-                float amount = Float.parseFloat(splitLine[4]);
-                Transaction transaction = new Transaction(date, time, description, vendor, amount);
+                if (!line.isBlank()) {
+                    String[] splitLine = line.split("\\|");
+                    LocalDate date = LocalDate.parse(splitLine[0]);
+                    LocalTime time = LocalTime.parse(splitLine[1]);
+                    String description = splitLine[2];
+                    String vendor = splitLine[3];
+                    float amount = Float.parseFloat(splitLine[4]);
+                    Transaction transaction = new Transaction(date, time, description, vendor, amount);
 
-                transactionList.addTransactionToList(transaction);
+                    transactionList.addTransactionToList(transaction);
+                }
             }
-
             bufReader1.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -110,15 +150,17 @@ public class Main {
             transactionList.clearTransactionList(); // Removes every element from the transactionsList ArrayList in order to add newly inputted elements.
             String line;
             while ((line = bufReader1.readLine()) != null) {
-                String[] splitLine = line.split("\\|");
-                LocalDate date = LocalDate.parse(splitLine[0]);
-                LocalTime time = LocalTime.parse(splitLine[1]);
-                String description = splitLine[2];
-                String vendor = splitLine[3];
-                float amount = Float.parseFloat(splitLine[4]);
-                Transaction transaction = new Transaction(date, time, description, vendor, amount);
+                if (!line.isBlank()) {
+                    String[] splitLine = line.split("\\|");
+                    LocalDate date = LocalDate.parse(splitLine[0]);
+                    LocalTime time = LocalTime.parse(splitLine[1]);
+                    String description = splitLine[2];
+                    String vendor = splitLine[3];
+                    float amount = Float.parseFloat(splitLine[4]);
+                    Transaction transaction = new Transaction(date, time, description, vendor, amount);
 
-                transactionList.addTransactionToList(transaction);
+                    transactionList.addTransactionToList(transaction);
+                }
             }
 
             bufReader1.close();
@@ -135,11 +177,22 @@ public class Main {
             // Have to append data to the end of the .txt file so that it doesn't overwrite the previous output(s) to the file.
             // The append argument is set to "true" for the FileWriter.
             BufferedWriter bufWriter = new BufferedWriter(new FileWriter("transactions.txt", true));
+//            BufferedWriter bufWriterNoAppend = new BufferedWriter(new FileWriter("transactions.txt"));
+//            BufferedReader bufReader = new BufferedReader(new FileReader("transactions.txt"));
 
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
             String formattedDate = transaction.getDate().format(dateFormatter);
             String formattedTime = transaction.getTime().format(timeFormatter);
+
+//            String line;
+//            line = bufReader.readLine();
+//            if (line != null) {
+//                if (line.isBlank()) {
+//                    line = line.trim();
+//                }
+//            }
+
 
             bufWriter.write(
                     formattedDate + "|" +
@@ -179,14 +232,16 @@ public class Main {
             BufferedReader bufReader2 = new BufferedReader(new FileReader("transactions.txt"));
 
             String line;
-            if ((line = bufReader2.readLine()) != null) {
-                bufReader2.close();
+            while ((line = bufReader2.readLine()) != null) {
+                if (!line.isBlank()) {
+                    bufReader2.close();
 
-                return false; // If file is NOT empty, returns "false"
-            } else {
-                bufReader2.close();
+                    return false; // If file is NOT empty, returns "false"
+                } else {
+                    bufReader2.close();
 
-                return true; // If file IS empty, returns "true"
+                    return true; // If file IS empty, returns "true"
+                }
             }
 
         } catch (IOException e) {

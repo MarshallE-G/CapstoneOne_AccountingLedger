@@ -1,6 +1,5 @@
-2023-04-15|10:13:25|ergonomic keyboard|Amazon|-89.50
-2023-04-15|11:15:00|Invoice 1001 paid|Joe|1500.00
-2024-04-29|18:36:16|Potato man paid|Womanly Potato|43232.19
-2024-04-30|11:29:59|negative value|negative|-766700.50
-2024-04-30|11:45:15|ejehjehe|creeec|839282.00
-2024-05-01|18:28:23|Potato woman paid|Potato man|387379.22
+
+2024-05-02|11:07:00|vfkff|vrfrf|2343.00
+
+
+2024-05-02|11:07:00|vfkff|vrfrf|2343.00
