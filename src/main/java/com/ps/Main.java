@@ -113,7 +113,7 @@ public class Main {
         }
     }
 
-    // Reads from the File, but clears the ArrayList then re-creates it using the (updated) .txt file.
+    // Reads from the File, but clears the ArrayList then re-creates it using the (updated) transactions.txt file.
     public static void addNewDataToList() {
         try {
             BufferedReader bufReader1 = new BufferedReader(new FileReader("transactions.txt")); // bufReader2 is in isFileEmpty() method
@@ -184,7 +184,7 @@ public class Main {
         }
     }
 
-    //
+    // Checks to see if transactions.txt file is empty or not.
     public static boolean isFileEmpty() {
         try {
             BufferedReader bufReader2 = new BufferedReader(new FileReader("transactions.txt"));

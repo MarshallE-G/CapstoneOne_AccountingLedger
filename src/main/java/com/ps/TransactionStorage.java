@@ -1,7 +1,9 @@
 package com.ps;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /*
 This class keeps track of all transactions.
@@ -274,8 +276,84 @@ public class TransactionStorage {
         }
     }
 
-// Challenge/Bonus tasks
+// Challenge/Bonus tasks (very complicated)
     // Custom Search
+    /*public void customSearch(Scanner scanner) {
+        // Search values (ledger entry properties)
+            // Start Date
+        LocalDate startDate;
+            // End Date
+        LocalDate endDate;
+            // Description
+        String description;
+            // Vendor
+        String vendor;
+            // Amount
+        float amount;
+//        float amount;
 
+        boolean hasStartDate = false;
+        boolean hasEndDate = false;
+        boolean hasDescription = false;
+        boolean hasVendor = false;
+        boolean hasAmount = false;
+
+        // Ask for: Start Date
+        System.out.println("What is the start date of the transaction?");
+        startDate = LocalDate.parse(scanner.next());
+
+        // Ask for: End Date
+        System.out.println("What is the end date of the transaction?");
+        endDate = LocalDate.parse(scanner.next());
+
+        // Ask for: Description
+        System.out.println("What is the description of the transaction?");
+        description = scanner.next();
+
+        // Ask for: Vendor
+        System.out.println("What is the name of the vendor that the transaction is registered to?");
+        vendor = scanner.next();
+
+        // Ask for: Amount
+        System.out.println("What is the amount recorded in the transaction?");
+//        amount = scanner.nextFloat();
+        amount = Float.parseFloat(scanner.next());
+
+        // If user inputs a field, filter based on that (those) field(s)
+            // Not using "else" because I want all of these if-statements to run.
+        if (!startDate.isEmpty()) {
+            hasStartDate = true;
+        }
+        if (!endDate.isEmpty()) {
+            hasEndDate = true;
+        }
+        if (!description.isEmpty()) {
+            hasDescription = true;
+        }
+        if (!vendor.isEmpty()) {
+            hasVendor = true;
+        }
+        if (!amount.isEmpty()) {
+            hasAmount = true;
+        }
+
+        if (hasStartDate) {
+            if () {
+
+            }
+
+        }
+
+        for (int i = transactionList.size()-1; i > 0; i--) {
+            int startDateMonth = startDate.getMonthValue();
+            int endDateMonth = endDate.getMonthValue();
+            if () {
+
+            }
+        }
+
+
+        // If user does NOT input a field, do NOT filter based on that (those) field(s)
+    }*/
 
 }
