@@ -2,7 +2,6 @@ package com.ps;
 
 import java.io.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -10,6 +9,7 @@ import java.util.Scanner;
 public class Main {
     // Static global variable for transactions
     static TransactionStorage transactionList = new TransactionStorage();
+    Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         /*
@@ -21,6 +21,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         readFromFile();
+        //length = how many elements are in the array.
 
         String menuSelection; // For Home Menu options
         do {
@@ -45,7 +46,7 @@ public class Main {
                 case "L":
                     System.out.println("\nLedger Menu selected.\n");
 
-                    ledgerMenu();
+                    ledgerMenu(scanner);
                     break;
                 case "X":
                     break;
@@ -183,6 +184,7 @@ public class Main {
         }
     }
 
+    //
     public static boolean isFileEmpty() {
         try {
             BufferedReader bufReader2 = new BufferedReader(new FileReader("transactions.txt"));
@@ -248,7 +250,7 @@ public class Main {
             // Output transaction to transactions file
         writeToFile(transaction);
 
-        System.out.println("Auto-redirecting to Home menu...\n\n");
+        System.out.println("\nAuto-redirecting to Home menu...\n\n");
     }
 
     // Make a Payment option
@@ -280,8 +282,8 @@ public class Main {
     }
 
     // Ledger Menu option
-    public static void ledgerMenu() {
-        Scanner scanner = new Scanner(System.in);
+    public static void ledgerMenu(Scanner scanner) { // Creating multiple scanners messes up the application.
+
 
         String ledgerMenuSelection;
         // Do-while loop
@@ -353,24 +355,22 @@ public class Main {
                     break;
                 case "R": // Reports Menu
 
-                    reportsMenu();
+                    reportsMenu(scanner);
 
                     break;
                 case "H": // Go back to Home
                     System.out.println("\nReturning to Home Menu...\n");
-                    break;
+                    return; // Using this because it works better for the SYSTEM to "return" to the last point (this being the previous menu)
                 default:
                     System.out.println("ERROR: Must type either A, D, P, R, or H!");
                     break;
             }
         } while (!ledgerMenuSelection.equalsIgnoreCase("H"));
         // End of Ledger Menu Do-while loop
-        scanner.close();
     }
 
     // Reports Menu option
-    public static void reportsMenu() {
-        Scanner scanner = new Scanner(System.in);
+    public static void reportsMenu(Scanner scanner) {
 
         String reportsMenuSelection;
         // Do-while loop
@@ -499,14 +499,13 @@ public class Main {
                     break;
                 case "0": // Go back to Ledger
                     System.out.println("\nReturning to Ledger Menu...\n");
-                    break;
+                    return; // Using this because it works better for the SYSTEM to "return" to the last point (this being the previous menu)
                 default:
                     System.out.println("ERROR: Must type either 1, 2, 3, 4, 5, or 0!");
                     break;
             }
         } while (!reportsMenuSelection.equals("0"));
         // End of Do-while loop
-        scanner.close();
     }
 
 }
