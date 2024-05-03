@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class Main {
     // Static global variable for transactions
     static TransactionStorage transactionList = new TransactionStorage();
-    Scanner scanner = new Scanner(System.in);
     private static ColorsAndGrapics style = new ColorsAndGrapics();
 
     public static void main(String[] args) {
@@ -132,22 +131,11 @@ public class Main {
             // Have to append data to the end of the .txt file so that it doesn't overwrite the previous output(s) to the file.
             // The append argument is set to "true" for the FileWriter.
             BufferedWriter bufWriter = new BufferedWriter(new FileWriter("transactions.txt", true));
-//            BufferedWriter bufWriterNoAppend = new BufferedWriter(new FileWriter("transactions.txt"));
-//            BufferedReader bufReader = new BufferedReader(new FileReader("transactions.txt"));
 
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
             String formattedDate = transaction.getDate().format(dateFormatter);
             String formattedTime = transaction.getTime().format(timeFormatter);
-
-//            String line;
-//            line = bufReader.readLine();
-//            if (line != null) {
-//                if (line.isBlank()) {
-//                    line = line.trim();
-//                }
-//            }
-
 
             bufWriter.write(
                     formattedDate + "|" +
@@ -157,6 +145,7 @@ public class Main {
                                     transaction.getVendor(),
                                     transaction.getAmount()
                             ));
+
 
             System.out.println("Format: \"Date | Time | Description | Vendor | Amount\"\n");
             if (transaction.getAmount() == Math.abs(transaction.getAmount())) { // If credit: prints NO negative sign
@@ -184,12 +173,12 @@ public class Main {
     // Checks to see if transactions.txt file is empty or not.
     public static boolean isFileEmpty() {
         try {
-            BufferedReader bufReader2 = new BufferedReader(new FileReader("transactions.txt"));
+            BufferedReader bufReader3 = new BufferedReader(new FileReader("transactions.txt"));
 
             String line;
-            while ((line = bufReader2.readLine()) != null) {
+            while ((line = bufReader3.readLine()) != null) {
                 if (!line.isBlank()) {
-                    bufReader2.close();
+                    bufReader3.close();
 
                     return false; // If file is NOT empty, returns "false"
                 }
