@@ -10,7 +10,7 @@ application allows a user to add new transactions to the system and view all tra
   - I figured out that the easiest way around it was to make my methods that contained a ``BufferedReader`` ignore any blank lines that may be in the file.
     - My ``isFileEmpty()`` method will return ``false`` if the file it's reading is **not** empty/blank, and ``true`` if **it is** empty/blank.
 
-## Screenshots of my console
+## Screenshots of command line
 
 ------------
 ![HomeMenu.PNG](HomeMenu.PNG)
