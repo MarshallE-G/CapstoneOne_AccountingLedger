@@ -16,18 +16,16 @@ public class TransactionStorage {
         this.transactionList = new ArrayList<>();
     }
 
-    // Adds a transaction to an ArrayList of transactions
     public void addTransactionToList(Transaction transaction) {
         transactionList.add(transaction);
     }
 
-    // Clears every transaction from the system/ArrayList
+    // Clears every transaction from the transactionList ArrayList
     public void clearTransactionList() {
         transactionList.clear();
     }
 
-// Ledger/Report Menu filtering methods (from the newest transaction to oldest)
-    // Displays a list of ALL transactions within the transactionList ArrayList
+// Ledger/Report Menu filtering methods
     public void displayAllTransactions() {
         if (!Main.isFileEmpty()) { // If the transactions.txt file is NOT empty, do this...
             System.out.println("\n" + style.BOLD + style.BRIGHT_BLUE_BACKGROUND + style.BLACK +
@@ -45,7 +43,6 @@ public class TransactionStorage {
 
     }
 
-    // Displays a list of all DEPOSITS within the transactionList ArrayList
     public void displayDeposits() {
         boolean anyDeposits = false;
 
@@ -74,7 +71,6 @@ public class TransactionStorage {
         }
     }
 
-    // Displays a list of all PAYMENTS (DEBITS) within the transactionList ArrayList
     public void displayPayments() {
         boolean anyPayments = false;
 
@@ -113,10 +109,10 @@ public class TransactionStorage {
                 LocalDate transactionDate = transaction.getDate(); // Date of a transaction
                 LocalDate dateNow = LocalDate.now();
 
-                int transactionMonth = transactionDate.getMonthValue(); // Month of transaction in integers
-                int transactionYear = transactionDate.getYear(); // Year of transaction
-                int monthNow = dateNow.getMonthValue(); // Current month in integers
-                int yearNow = dateNow.getYear(); // Current year
+                int transactionMonth = transactionDate.getMonthValue();
+                int transactionYear = transactionDate.getYear();
+                int monthNow = dateNow.getMonthValue();
+                int yearNow = dateNow.getYear();
 
                 if (transactionMonth == monthNow && transactionYear == yearNow) {
                     System.out.println(transactionList.get(i));
@@ -132,22 +128,21 @@ public class TransactionStorage {
         }
     }
 
-    // Displays all transactions from the previous month (e.g. March 1st - March 31st)
     public void previousMonth() {
         boolean transactionInPreviousMonth = false;
 
         if (!Main.isFileEmpty()) { // If the transactions.txt file is NOT empty, do this...
             for (int i = transactionList.size() - 1; i > -1; i--) { // From newest to oldest transaction
                 Transaction transaction = transactionList.get(i); // A single transaction
-                LocalDate transactionDate = transaction.getDate(); // Date of a transaction
-                LocalDate dateNow = LocalDate.now(); // Current date
+                LocalDate transactionDate = transaction.getDate();
+                LocalDate dateNow = LocalDate.now();
 
-                int transactionMonth = transactionDate.getMonthValue(); // Month of transaction in integers
-                int transactionYear = transactionDate.getYear(); // Year of transaction
-                int monthNow = dateNow.getMonthValue(); // Current month in integers
-                int yearNow = dateNow.getYear(); // Current year
+                int transactionMonth = transactionDate.getMonthValue();
+                int transactionYear = transactionDate.getYear();
+                int monthNow = dateNow.getMonthValue();
+                int yearNow = dateNow.getYear();
                 int previousMonth = -1; // Previous month in integers (set to a default number).
-                int previousYear = yearNow - 1; // Previous year
+                int previousYear = yearNow - 1;
 
                 if (monthNow > 1) { // If current month is AFTER January
                     previousMonth = monthNow - 1;
@@ -181,10 +176,10 @@ public class TransactionStorage {
             for (int i = transactionList.size() - 1; i > -1; i--) { // From newest to oldest transaction
                 Transaction transaction = transactionList.get(i); // A single transaction
                 LocalDate transactionDate = transaction.getDate(); // Date of a transaction
-                LocalDate dateNow = LocalDate.now(); // Current date
+                LocalDate dateNow = LocalDate.now();
 
-                int transactionYear = transactionDate.getYear(); // Year of transaction
-                int yearNow = dateNow.getYear(); // Current year
+                int transactionYear = transactionDate.getYear();
+                int yearNow = dateNow.getYear();
 
                 if (transactionYear == yearNow) {
                     System.out.println(transactionList.get(i));
@@ -200,19 +195,18 @@ public class TransactionStorage {
         }
     }
 
-    // Displays all transactions from the previous YEAR (e.g. January 1st of Previous year to Dec 31st)
     public void previousYear() {
         boolean transactionInPreviousYear = false;
 
         if (!Main.isFileEmpty()) { // If the transactions.txt file is NOT empty, do this...
             for (int i = transactionList.size() - 1; i > -1; i--) { // From newest to oldest transaction
                 Transaction transaction = transactionList.get(i); // A single transaction
-                LocalDate transactionDate = transaction.getDate(); // Date of a transaction
-                LocalDate dateNow = LocalDate.now(); // Current date
+                LocalDate transactionDate = transaction.getDate();
+                LocalDate dateNow = LocalDate.now();
 
-                int transactionYear = transactionDate.getYear(); // Year of transaction
-                int yearNow = dateNow.getYear(); // Current year
-                int previousYear = yearNow - 1; // Previous year
+                int transactionYear = transactionDate.getYear();
+                int yearNow = dateNow.getYear();
+                int previousYear = yearNow - 1;
 
                 if (transactionYear == previousYear) {
                     System.out.println(transactionList.get(i));
@@ -228,7 +222,6 @@ public class TransactionStorage {
         }
     }
 
-    // Display all transactions registered to a specific vendor (DON'T use spaces n stuff, keep it simple)
     public void searchByVendor(String inputVendor) {
         boolean vendorMadeTransaction = false;
         boolean firstTransaction = true;

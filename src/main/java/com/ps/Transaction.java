@@ -57,7 +57,6 @@ public class Transaction {
         this.amount = amount;
     }
 
-    // ToString() method
     @Override
     public String toString() {
         if (amount == Math.abs(amount)) {

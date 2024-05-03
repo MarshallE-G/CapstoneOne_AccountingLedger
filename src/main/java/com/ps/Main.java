@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Main {
-    // Static global variable for transactions
     static TransactionStorage transactionList = new TransactionStorage();
     private static ColorsAndGrapics style = new ColorsAndGrapics();
 
@@ -71,7 +70,6 @@ public class Main {
         scanner.close();
     }
 
-    // readFromFile method to read from File
     public static void readFromFile() {
         try {
             BufferedReader bufReader1 = new BufferedReader(new FileReader("transactions.txt")); // bufReader2 is in isFileEmpty() method
@@ -123,7 +121,6 @@ public class Main {
         }
     }
 
-    // writeToFile method to write to File
     public static void writeToFile(Transaction transaction) {
         // Format Date and Time
 
@@ -214,7 +211,6 @@ public class Main {
                 style.BLACK + "EXIT" + style.END_COLOR);
     }
 
-    // Add Deposit option
     public static void addDeposit() {
         String description;
         String vendor;
@@ -242,7 +238,6 @@ public class Main {
         System.out.println("\n" + style.ITALIC + style.BOLD + "Auto-redirecting to Home menu..." + style.END_ITALIC + style.END_BOLD + "\n\n");
     }
 
-    // Make a Payment option
     public static void makePayment() {
         // *Make Payment (Debit)*
         String description;
@@ -271,7 +266,6 @@ public class Main {
         System.out.println("\n" + style.ITALIC + style.BOLD + "Auto-redirecting to Home menu..." + style.END_ITALIC + style.END_BOLD + "\n\n");
     }
 
-    // Ledger Menu option
     public static void ledgerMenu(Scanner scanner) { // Creating multiple scanners messes up the application.
 
 
@@ -373,7 +367,6 @@ public class Main {
         } while (!ledgerMenuSelection.equalsIgnoreCase("H"));
     }
 
-    // Reports Menu option
     public static void reportsMenu(Scanner scanner) {
 
         String reportsMenuSelection;

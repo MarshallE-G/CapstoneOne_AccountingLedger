@@ -1,7 +1,10 @@
 package com.ps;
 
+/*
+ Class for ANSI code
+ */
+
 public class ColorsAndGrapics {
-    // ANSI code
         // Colors
     public final String BLACK = "\u001b[30m"; public final String BLACK_BACKGROUND = "\u001b[40m";
     public final String RED = "\u001B[31m"; public final String RED_BACKGROUND = "\u001b[41m";
