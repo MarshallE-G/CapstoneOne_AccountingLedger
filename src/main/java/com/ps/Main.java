@@ -52,25 +52,14 @@ public class Main {
                 default:
                     System.out.println(style.BOLD + style.RED + style.BLACK_BACKGROUND + "ERROR: Must type either D, P, L, or X!" + style.END_BOLD + style.END_COLOR);
 
-                    String backButton;
-                    // "Back" button
-                    do {
-                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
-                        backButton = scanner.next();
-                        if (backButton.equalsIgnoreCase("B")) {
-                            break;
-                        } else {
-                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
-                                    " and press 'Enter' to leave page.");
-                        }
-                    } while (!backButton.equalsIgnoreCase("B"));
+                    backButton(scanner);
                     break;
             }
         } while (!menuSelection.equalsIgnoreCase("X"));
         scanner.close();
     }
 
-    public static void readFromFile() {
+    private static void readFromFile() {
         try {
             BufferedReader bufReader1 = new BufferedReader(new FileReader("transactions.txt")); // bufReader2 is in isFileEmpty() method
 
@@ -95,7 +84,7 @@ public class Main {
     }
 
     // Reads from the File, but clears the ArrayList then re-creates it using the (updated) transactions.txt file.
-    public static void addNewDataToList() {
+    private static void addNewDataToList() {
         try {
             BufferedReader bufReader1 = new BufferedReader(new FileReader("transactions.txt")); // bufReader2 is in isFileEmpty() method
 
@@ -121,7 +110,7 @@ public class Main {
         }
     }
 
-    public static void writeToFile(Transaction transaction) {
+    private static void writeToFile(Transaction transaction) {
         // Format Date and Time
 
         try {
@@ -190,7 +179,7 @@ public class Main {
 // Static methods for Menus
 
     // Home Menu display
-    public static void homeMenu() {
+    private static void homeMenu() {
         Scanner scanner = new Scanner(System.in);
         System.out.println(style.BRIGHT_WHITE + "* * * * * * *");
         System.out.println("* Home Menu *");
@@ -211,7 +200,7 @@ public class Main {
                 style.BLACK + "EXIT" + style.END_COLOR);
     }
 
-    public static void addDeposit() {
+    private static void addDeposit() {
         String description;
         String vendor;
         float amount;
@@ -238,7 +227,7 @@ public class Main {
         System.out.println("\n" + style.ITALIC + style.BOLD + "Auto-redirecting to Home menu..." + style.END_ITALIC + style.END_BOLD + "\n\n");
     }
 
-    public static void makePayment() {
+    private static void makePayment() {
         // *Make Payment (Debit)*
         String description;
         String vendor;
@@ -266,7 +255,7 @@ public class Main {
         System.out.println("\n" + style.ITALIC + style.BOLD + "Auto-redirecting to Home menu..." + style.END_ITALIC + style.END_BOLD + "\n\n");
     }
 
-    public static void ledgerMenu(Scanner scanner) { // Creating multiple scanners messes up the application.
+    private static void ledgerMenu(Scanner scanner) { // Creating multiple scanners messes up the application.
 
 
         String ledgerMenuSelection;
@@ -297,46 +286,19 @@ public class Main {
                     transactionList.displayAllTransactions();
 
                     // "Back" button
-                    do {
-                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
-                        backButton = scanner.next();
-                        if (backButton.equalsIgnoreCase("B")) {
-                            break;
-                        } else {
-                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
-                                    " and press 'Enter' to leave page.");
-                        }
-                    } while (!backButton.equalsIgnoreCase("B"));
+                    backButton(scanner);
                     break;
                 case "D": // Deposits
                     transactionList.displayDeposits();
 
                     // "Back" button
-                    do {
-                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
-                        backButton = scanner.next();
-                        if (backButton.equalsIgnoreCase("B")) {
-                            break;
-                        } else {
-                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
-                                    " and press 'Enter' to leave page.");
-                        }
-                    } while (!backButton.equalsIgnoreCase("B"));
+                    backButton(scanner);
                     break;
                 case "P": // Payments
                     transactionList.displayPayments();
 
                     // "Back" button
-                    do {
-                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
-                        backButton = scanner.next();
-                        if (backButton.equalsIgnoreCase("B")) {
-                            break;
-                        } else {
-                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
-                                    " and press 'Enter' to leave page.");
-                        }
-                    } while (!backButton.equalsIgnoreCase("B"));
+                    backButton(scanner);
                     break;
                 case "R": // Reports Menu
                     System.out.println("\n" + style.BRIGHT_MAGENTA + "Reports Menu " + style.END_COLOR + "selected.\n");
@@ -352,22 +314,13 @@ public class Main {
                     System.out.println(style.BOLD + style.RED + style.BLACK_BACKGROUND + "ERROR: Must type either A, D, P, R, or H!"
                             + style.END_BOLD + style.END_COLOR);
 
-                    do {
-                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
-                        backButton = scanner.next();
-                        if (backButton.equalsIgnoreCase("B")) {
-                            break;
-                        } else {
-                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
-                                    " and press 'Enter' to leave page.");
-                        }
-                    } while (!backButton.equalsIgnoreCase("B"));
+                    backButton(scanner);
                     break;
             }
         } while (!ledgerMenuSelection.equalsIgnoreCase("H"));
     }
 
-    public static void reportsMenu(Scanner scanner) {
+    private static void reportsMenu(Scanner scanner) {
 
         String reportsMenuSelection;
         do {
@@ -403,17 +356,7 @@ public class Main {
 
                     transactionList.monthToDate();
 
-                    // Do this to leave this report page
-                    do {
-                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
-                        backButton = scanner.next();
-                        if (backButton.equalsIgnoreCase("B")) {
-                            break;
-                        } else {
-                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
-                                    " and press 'Enter' to leave page.");
-                        }
-                    } while (!backButton.equalsIgnoreCase("B"));
+                    backButton(scanner);
                     break;
                 case "2": // Previous Month
                     System.out.println("\n" + style.BOLD + style.WHITE_BACKGROUND + style.BLACK +
@@ -424,17 +367,7 @@ public class Main {
 
                     transactionList.previousMonth();
 
-                    // Do this to leave this report page
-                    do {
-                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
-                        backButton = scanner.next();
-                        if (backButton.equalsIgnoreCase("B")) {
-                            break;
-                        } else {
-                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
-                                    " and press 'Enter' to leave page.");
-                        }
-                    } while (!backButton.equalsIgnoreCase("B"));
+                    backButton(scanner);
                     break;
                 case "3": // Year to Date
                     System.out.println("\n" + style.BOLD + style.WHITE_BACKGROUND + style.BLACK +
@@ -445,17 +378,7 @@ public class Main {
 
                     transactionList.yearToDate();
 
-                    // Do this to leave this report page
-                    do {
-                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
-                        backButton = scanner.next();
-                        if (backButton.equalsIgnoreCase("B")) {
-                            break;
-                        } else {
-                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
-                                    " and press 'Enter' to leave page.");
-                        }
-                    } while (!backButton.equalsIgnoreCase("B"));
+                    backButton(scanner);
                     break;
                 case "4": // Previous Year
                     System.out.println("\n" + style.BOLD + style.WHITE_BACKGROUND + style.BLACK +
@@ -466,17 +389,7 @@ public class Main {
 
                     transactionList.previousYear();
 
-                    // Do this to leave this report page
-                    do {
-                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
-                        backButton = scanner.next();
-                        if (backButton.equalsIgnoreCase("B")) {
-                            break;
-                        } else {
-                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
-                                    " and press 'Enter' to leave page.");
-                        }
-                    } while (!backButton.equalsIgnoreCase("B"));
+                    backButton(scanner);
                     break;
                 case "5": // Search by Vendor
                     String vendor;
@@ -484,20 +397,11 @@ public class Main {
                     System.out.println("Enter the name of a vendor to see transactions registered to them.");
                     System.out.println("Enter here:");
                     vendor = scanner.next();
+                    vendor += scanner.nextLine(); // Had to do this because .next() wasn't reading the full line and caused whitespace/skipping issue.
 
                     transactionList.searchByVendor(vendor); // Moved page header to inside the searchByVendor() method.
 
-                    // Do this to leave this report page
-                    do {
-                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
-                        backButton = scanner.next();
-                        if (backButton.equalsIgnoreCase("B")) {
-                            break;
-                        } else {
-                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
-                                    " and press 'Enter' to leave page.");
-                        }
-                    } while (!backButton.equalsIgnoreCase("B"));
+                    backButton(scanner);
                     break;
                 case "0": // Go back to Ledger
                     System.out.println("\n" + style.ITALIC + style.BOLD + "Returning to " + style.BRIGHT_YELLOW + "Ledger Menu" +
@@ -507,19 +411,26 @@ public class Main {
                     System.out.println(style.BOLD + style.RED + style.BLACK_BACKGROUND + "ERROR: Must type either 1, 2, 3, 4, 5, or 0!"
                             + style.END_BOLD + style.END_COLOR);
 
-                    do {
-                        System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
-                        backButton = scanner.next();
-                        if (backButton.equalsIgnoreCase("B")) {
-                            break;
-                        } else {
-                            System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
-                                    " and press 'Enter' to leave page.");
-                        }
-                    } while (!backButton.equalsIgnoreCase("B"));
+                    backButton(scanner);
                     break;
             }
         } while (!reportsMenuSelection.equals("0"));
+    }
+
+    private static void backButton(Scanner scanner) {
+        String backButton;
+
+        do {
+            System.out.println("\nEnter " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR + " to leave page:");
+            backButton = scanner.next();
+            if (backButton.equalsIgnoreCase("B")) {
+                break;
+            } else {
+                System.out.println("\nERROR: Must type " + style.WHITE_BACKGROUND + style.BLACK + "B" + style.END_COLOR +
+                        " and press 'Enter' to leave page.");
+            }
+        } while (!backButton.equalsIgnoreCase("B"));
+
     }
 
 }
